@@ -4,7 +4,7 @@
       <el-menu-item index="index">
         <el-image style="height: 50px; width: 50px" :src="logourl" fit="contain"></el-image>
       </el-menu-item>
-      <el-menu-item index="index">主页</el-menu-item>
+      <el-menu-item index="index"><router-link to="/index">主页</router-link></el-menu-item>
       <el-submenu index="2">
         <template slot="title">我的工作台</template>
         <el-menu-item index="2-1">选项1</el-menu-item>
@@ -193,7 +193,7 @@ export default {
     this.axios
         .get(this.GLOBAL.BASE_REQUEST_URL + "/gettoken")
         .then(response => {
-          console.log(response);
+          // console.log(response);
           if (response.data.status.status === "success") {
             // console.log("USER_NAME:", response.data.user.username);
             this.GLOBAL.USER_NAME = response.data.user.username;
@@ -204,9 +204,6 @@ export default {
             this.user.userEmail = this.GLOBAL.USER_EMAIL;
           }
         })
-        .catch(error=> {
-          console.log(error);
-        });
   },
 };
 </script>

@@ -5,9 +5,8 @@
         <v-navbar></v-navbar>
       </el-header>
     </el-container>
+    <router-view></router-view>
 
-    <el-main>Main</el-main>
-    <el-aside width="200px">Aside</el-aside>
     <el-footer>Footer</el-footer>
   </div>
 </template>

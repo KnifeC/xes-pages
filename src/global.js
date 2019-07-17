@@ -1,4 +1,4 @@
-<script>
+
 
 var USER_UUID="";
 var USER_NAME="";
@@ -12,4 +12,4 @@ export default {
     USER_TYPE,
     BASE_REQUEST_URL
 };
-</script>
+
