@@ -33,9 +33,11 @@ export default {
         this.questionContent = result.data.questionDataList[0].questionContent;
         this.questionAnswer = result.data.questionDataList[0].questionAnswer;
         this.questionType = result.data.questionDataList[0].questionType;
+      }else{
+        this.$router.push("/err");
       }
     }).catch((err) => {
-      console.log(err);
+      this.$router.push("/err");
     });
   }
 };

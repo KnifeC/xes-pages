@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     goDetail() {
-      this.$router.replace({ path: "/question/" + this.itemdata.questionId });
+      this.$router.push({ path: "/question/" + this.itemdata.questionId });
     }
   },
   beforeCreate() {},
