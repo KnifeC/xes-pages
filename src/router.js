@@ -10,6 +10,7 @@ import Question from './components/Question/Question.vue';
 import Group from './components/Group/Group.vue'
 import QuestionBank from './components/QuestionBank/QuestionBank.vue';
 import Exam from './components/Exam/Exam.vue';
+import Findexam from './components/Findexam/Findexam';
 
 
 const routes = [
@@ -19,6 +20,7 @@ const routes = [
     { path : '/group' , component : Group },
     { path : '/questionbank' , component : QuestionBank },
     { path : '/exam' , component : Exam },
+    { path : '/findexam' , component: Findexam },
     { path : '/' , redirect : '/index' },
     { path : '*' , component : ErrorComponent },
 ];
