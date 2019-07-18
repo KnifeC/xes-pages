@@ -1,8 +1,9 @@
 <template>
-    <h2>考试页面还没写</h2>
+    <findexam></findexam>
 </template>
 
 <script>
+import FindExam from './Findexam.vue';
 export default {
     data(){
         return{
@@ -11,6 +12,9 @@ export default {
     },
     methods:{
 
+    },
+    components:{
+        'findexam':FindExam,
     },
     mounted(){
         
