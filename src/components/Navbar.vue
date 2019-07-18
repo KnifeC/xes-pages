@@ -1,18 +1,25 @@
 <template>
   <div id="navbar">
-    <el-menu :mode="modes">
+    <el-menu :mode="modes" router :default-active="activeIndex">
       <el-menu-item index="index">
         <el-image style="height: 50px; width: 50px" :src="logourl" fit="contain"></el-image>
       </el-menu-item>
-      <el-menu-item index="index"><router-link to="/index">主页</router-link></el-menu-item>
+      <el-menu-item index="index">
+        主页
+      </el-menu-item>
+      <el-menu-item index="question">
+        查看题目
+      </el-menu-item>
       <el-submenu index="2">
         <template slot="title">我的工作台</template>
         <el-menu-item index="2-1">选项1</el-menu-item>
         <el-menu-item index="2-2">选项2</el-menu-item>
         <el-menu-item index="2-3">选项3</el-menu-item>
       </el-submenu>
+      <el-menu-item>
+
+      </el-menu-item>
       <el-menu-item
-        index="loginButton"
         style="float:right"
         @click="loginDialogVisible = true"
         v-if="user.username===''"
@@ -25,7 +32,7 @@
         <el-col :md="{span:12,offset:6}">
           <h2>登录</h2>
           <!-- :rules="loginRules" -->
-          <el-form @keyup.enter.native="login()"  ref="loginForm">
+          <el-form @keyup.enter.native="login()" ref="loginForm">
             <el-form-item prop="email">
               <el-input placeholder="请输入EMAIL" v-model="loginForm.email" style="width:100%;"></el-input>
             </el-form-item>
@@ -96,8 +103,9 @@ export default {
   props: {},
   data() {
     return {
+      activeIndex: "",
       modes: "horizontal",
-      logourl: "https://cn.vuejs.org/images/logo.png",
+      logourl: "../../static/logo.svg",
       loginDialogVisible: false,
       registerDialogVisible: false,
       user: { username: "", userUuid: "", userEmail: "" },
@@ -139,6 +147,7 @@ export default {
             this.GLOBAL.USER_NAME = response.data.user.username;
             this.GLOBAL.USER_UUID = response.data.user.userUuid;
             this.GLOBAL.USER_EMAIL = response.data.user.email;
+            this.GLOBAL.UESR_TYPE = response.data.user.user
             this.user.username = this.GLOBAL.USER_NAME;
             this.user.userUuid = this.GLOBAL.USER_UUID;
             this.user.userEmail = this.GLOBAL.USER_EMAIL;
@@ -176,35 +185,35 @@ export default {
             this.registerForm.password = "";
             this.registerForm.re_password = "";
           }
-        })
-        // .catch(error => {
-        //   // console.log(error);
-        //   this.$message({
-        //     showClose: true,
-        //     message: "网络错误",
-        //     type: "error"
-        //   });
-        // });
+        });
+      // .catch(error => {
+      //   // console.log(error);
+      //   this.$message({
+      //     showClose: true,
+      //     message: "网络错误",
+      //     type: "error"
+      //   });
+      // });
     }
   },
   components: {},
   created() {},
-  beforeCreate(){
+  mounted() {
     this.axios
-        .get(this.GLOBAL.BASE_REQUEST_URL + "/gettoken")
-        .then(response => {
-          // console.log(response);
-          if (response.data.status.status === "success") {
-            // console.log("USER_NAME:", response.data.user.username);
-            this.GLOBAL.USER_NAME = response.data.user.username;
-            this.GLOBAL.USER_UUID = response.data.user.userUuid;
-            this.GLOBAL.USER_EMAIL = response.data.user.email;
-            this.user.username = this.GLOBAL.USER_NAME;
-            this.user.userUuid = this.GLOBAL.USER_UUID;
-            this.user.userEmail = this.GLOBAL.USER_EMAIL;
-          }
-        })
-  },
+      .get(this.GLOBAL.BASE_REQUEST_URL + "/gettoken")
+      .then(response => {
+        // console.log(response);
+        if (response.data.status.status === "success") {
+          // console.log("USER_NAME:", response.data.user.username);
+          this.GLOBAL.USER_NAME = response.data.user.username;
+          this.GLOBAL.USER_UUID = response.data.user.userUuid;
+          this.GLOBAL.USER_EMAIL = response.data.user.email;
+          this.user.username = this.GLOBAL.USER_NAME;
+          this.user.userUuid = this.GLOBAL.USER_UUID;
+          this.user.userEmail = this.GLOBAL.USER_EMAIL;
+        }
+      });
+  }
 };
 </script>
 

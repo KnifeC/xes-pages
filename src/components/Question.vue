@@ -1,0 +1,82 @@
+<template>
+  <div>
+    <el-row>
+      <el-col :md="{span:10,offset:7}" style="margin-top: 15px;">
+        <el-input
+          class="grid-content"
+          @keyup.enter.native="search()"
+          placeholder="请输入关键字或tag搜索"
+          v-model="keyWords"
+        >
+          <el-button
+            @click="search()"
+            @keyup.enter.native="search()"
+            slot="append"
+            icon="el-icon-search"
+          ></el-button>
+        </el-input>
+      </el-col>
+    </el-row>
+    <el-row v-loading="loading">
+      <el-col :md="{span:14,offset:5}" style="margin-top: 15px;">
+        <question-list-item v-if="this.questionDataList!==''" :data="questionDataList"></question-list-item>
+        <p v-if="noResult"> 抱歉没有查到你想要的结果 </p>
+      </el-col>
+    </el-row>
+  </div>
+</template>
+
+
+<script>
+import QuestionList from "./QuestionList.vue";
+
+export default {
+  data() {
+    return {
+      path: "",
+      keyWords: "",
+      questionDataList: "",
+      noResult:false,
+      loading:false,
+    };
+  },
+  components: {
+    "question-list-item": QuestionList
+  },
+  methods: {
+    search() {
+      // console.log('已经点击搜索');
+      this.questionDataList = "";
+      this.noResult = false;
+      this.loading = true;
+      this.axios
+        .get(this.GLOBAL.BASE_REQUEST_URL + "/search/" + this.keyWords)
+        .then(result => {
+          if (result.status.status === "success") {
+            this.questionDataList = result.data;
+          }else{
+            this.noResult = true;
+          }
+          this.loading = false;
+        })
+        .catch(err => {
+          this.questionDataList = err;
+        });
+    }
+  },
+  beforeCreate() {
+    this.path = this.$route.path;
+  },
+  mounted() {}
+};
+</script>
+
+<style scoped>
+.el-select .el-input {
+  width: 130px;
+}
+.input-with-select .el-input-group__prepend {
+  background-color: #fff;
+}
+</style>
+
