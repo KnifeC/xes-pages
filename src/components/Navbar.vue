@@ -9,7 +9,7 @@
       <el-menu-item index="/questionbank" v-if="user.userType!==''">个人题库</el-menu-item>
       <el-menu-item index="/exam" v-if="user.userType!==''">考试中心</el-menu-item>
       <el-menu-item index="/group" v-if="user.userType!==''">你的小组</el-menu-item>
-      <el-menu-item index="/manage" v-if="user.userType==='teacher'">教师中心</el-menu-item>
+      <el-menu-item index="/teacher" v-if="user.userType==='teacher'">教师中心</el-menu-item>
       <el-menu-item index="/admin" v-if="user.userType==='admin'">管理员面板</el-menu-item>
       <!-- <el-submenu index="2">
         <template slot="title">我的工作台</template>

@@ -11,6 +11,7 @@ import Group from './components/Group/Group.vue'
 import QuestionBank from './components/QuestionBank/QuestionBank.vue';
 import Exam from './components/Exam/Exam.vue';
 import Teacher from './components/Teacher/Teacher.vue';
+import Admin from './components/Admin/Admin.vue';
 
 const routes = [
   { path: '/index', component: Home, meta: { title: 'XES Examination System' } },
@@ -20,6 +21,8 @@ const routes = [
   { path: '/questionbank', component: QuestionBank, meta: { title: '题库' } },
   { path: '/exam', component: Exam, meta: { title: '测试' } },
   { path: '/teacher', component: Teacher, meta: { title: '教师面板' } },
+  { path: '/admin', component: Admin, meta: { title: '管理员面板' } },
+
   // { path : '/' , redirect : '/index' },
   { path: '*', component: ErrorComponent },
 ];
