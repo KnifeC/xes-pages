@@ -1,19 +1,25 @@
 <template>
-  <div>
-    <h1>测试{{msg}}组件</h1>
-  </div>
+    <el-row>
+      <el-col :md="{span:14,offset:5}">
+        <h2>XES Examination System</h2>
+      </el-col>
+    </el-row>
 </template>
-
 
 <script>
 export default {
-  data() {
-    return {
-      msg: "home"
-    };
-  },
-  methods: {}
-};
+    data(){
+        return{
+            
+        }
+    },
+    methods:{
+
+    },
+    mounted(){
+        
+    }
+}
 </script>
 
 <style scoped>

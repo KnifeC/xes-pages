@@ -46,7 +46,7 @@
           
         </el-table>
         <!-- <el-table v-if="this.examDataList!==''" :data="examDataList"></el-table> -->
-        <p v-if="noResult"> 抱歉没有查到你想要的结果 </p>
+        <p v-if="noResult" style="margin: 0 auto;"> 抱歉没有查到你想要的结果 </p>
       </el-col>
     </el-row>
   </div>

@@ -31,7 +31,7 @@ export default {
   method: {
     goBack() {
       console.log("返回上一页")
-      this.$router.go(-1);
+      this.$router.history.go(-1);
     }
   },
   beforeCreate() {
