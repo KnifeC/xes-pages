@@ -13,13 +13,13 @@ import Exam from './components/Exam/Exam.vue';
 
 
 const routes = [
-    { path : '/index' , component : Home ,meta:{title : 'XES Examination System'}},
-    { path : '/question/:questionid' , component : QuestionDetail },
-    { path : '/question', component : Question },
-    { path : '/group' , component : Group },
-    { path : '/questionbank' , component : QuestionBank },
-    { path : '/exam' , component : Exam },
-    { path : '/' , redirect : '/index' },
+    { path : '/index' , component : Home ,meta:{title : 'XES Examination System' }},
+    { path : '/question/:questionid' , component : QuestionDetail ,meta:{title : '题目详情' }},
+    { path : '/question', component : Question ,meta:{title : '题目' }},
+    { path : '/group' , component : Group ,meta:{title : '小组' }},
+    { path : '/questionbank' , component : QuestionBank ,meta:{title : '题库' }},
+    { path : '/exam' , component : Exam ,meta:{title : '测试' }},
+    // { path : '/' , redirect : '/index' },
     { path : '*' , component : ErrorComponent },
 ];
 

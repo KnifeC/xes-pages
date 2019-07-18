@@ -1,10 +1,21 @@
 <template>
   <div>
-    <el-row>
-      <el-col style="margin-top: 15px;">
-        <el-card shadow="hover" @click="goDetail()">{{itemdata.questionContent}}</el-card>
-      </el-col>
-    </el-row>
+    <!-- <el-row>
+    <el-col style="margin-top: 15px;">-->
+    <el-card shadow="hover" style="margin-top:25px">
+      <el-row>
+        <el-col :md="18" style="margin-top: 15px;">
+          <span>Tags:</span>
+        </el-col>
+        <el-col :md="6">
+          <el-button type="primary" @click="goDetail()">查看详情</el-button>
+        </el-col>
+      </el-row>
+      <el-divider></el-divider>
+      <el-row>{{itemdata.questionContent}}</el-row>
+    </el-card>
+    <!-- </el-col>
+    </el-row>-->
   </div>
 </template>
 
@@ -19,12 +30,12 @@ export default {
     };
   },
   props: {
-      itemdata:Object,
+    itemdata: Object
   },
   methods: {
-    goDetail(){
-      this.$route.push({path:"/question/"+this.itemdata.questionId});
-    },
+    goDetail() {
+      this.$router.replace({ path: "/question/" + this.itemdata.questionId });
+    }
   },
   beforeCreate() {},
   mounted() {}
