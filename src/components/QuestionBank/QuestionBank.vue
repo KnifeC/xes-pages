@@ -5,7 +5,7 @@
         <el-container>
           <el-aside>
             <el-tabs tab-position="left">
-              <el-tab-pane label="你的题库"></el-tab-pane>
+              <el-tab-pane label="你的题库"><router-link to='questionbank/'></router-link></el-tab-pane>
               <el-tab-pane label="你的题库"></el-tab-pane>
               <el-tab-pane label="新建题库"></el-tab-pane>
               <el-tab-pane label="管理题库"></el-tab-pane>

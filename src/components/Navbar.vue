@@ -1,5 +1,5 @@
 <template>
-  <div id="navbar">
+  <div id="navbar" v-loading.fullscreen.lock="fullscreenLoading">
     <el-menu :mode="modes" router :default-active="activeIndex">
       <el-menu-item index="index">
         <el-image style="height: 50px; width: 50px" :src="logourl" fit="contain"></el-image>
@@ -16,13 +16,17 @@
         <el-menu-item index="2-1">选项1</el-menu-item>
         <el-menu-item index="2-2">选项2</el-menu-item>
         <el-menu-item index="2-3">选项3</el-menu-item>
-      </el-submenu> -->
+      </el-submenu>-->
       <el-menu-item
         style="float:right"
         @click="loginDialogVisible = true"
         v-if="user.username===''"
       >登录</el-menu-item>
-      <el-menu-item style="float:right" v-else>{{user.username}}</el-menu-item>
+      <el-submenu style="float:right" v-else>
+        <template slot="title">{{user.username}}</template>
+      <el-menu-item >个人中心</el-menu-item>
+      <el-menu-item >登出</el-menu-item>
+      </el-submenu>
     </el-menu>
 
     <el-dialog :visible.sync="loginDialogVisible">
@@ -46,7 +50,9 @@
             <el-form-item>
               <el-button type="primary" @click="login()" style="width:100%;">登录</el-button>
             </el-form-item>
-            <el-divider><i class="el-icon-loading"></i></el-divider>
+            <el-divider>
+              <i class="el-icon-loading"></i>
+            </el-divider>
             <el-form-item>
               <el-button @click="changeDialog()" type="success" style="width:100%;">没有账号？注册</el-button>
             </el-form-item>
@@ -85,7 +91,9 @@
             <el-form-item>
               <el-button type="primary" @click="register()" style="width:100%;">注册</el-button>
             </el-form-item>
-            <el-divider><i class="el-icon-loading"></i></el-divider>
+            <el-divider>
+              <i class="el-icon-loading"></i>
+            </el-divider>
             <el-form-item>
               <el-button @click="changeDialog()" type="success" style="width:100%;">已有账号？登录</el-button>
             </el-form-item>
@@ -103,9 +111,10 @@ export default {
   props: {},
   data() {
     return {
+      fullscreenLoading: false,
       activeIndex: "",
       modes: "horizontal",
-      logourl: "./assets/logo.svg",
+      logourl: "https://i.loli.net/2019/07/18/5d30579ad7c9c27862.png",
       loginDialogVisible: false,
       registerDialogVisible: false,
       user: { username: "", userUuid: "", userEmail: "", userType: "" },
@@ -186,27 +195,34 @@ export default {
             this.registerForm.password = "";
             this.registerForm.re_password = "";
           }
+        })
+        .catch(() => {
+          // console.log(error);
+          this.$message({
+            showClose: true,
+            message: "网络错误",
+            type: "error"
+          });
         });
-      // .catch(error => {
-      //   // console.log(error);
-      //   this.$message({
-      //     showClose: true,
-      //     message: "网络错误",
-      //     type: "error"
-      //   });
-      // });
     }
   },
   components: {},
-  created() {},
-  beforeCreate() {
-    this.axios
-      .get(this.GLOBAL.BASE_REQUEST_URL + "/gettoken")
-      .then(response => {
-        // console.log(response);
-        if (response.data.status.status === "success") {
-          // console.log("USER_NAME:", response.data.user.username);
-          this.GLOBAL.USER_NAME = response.data.user.username;
+  created() {
+    this.fullscreenLoading = false;
+    if (this.GLOBAL.USER_NAME !== "") {
+      this.user.username = this.GLOBAL.USER_NAME;
+      this.user.userUuid = this.GLOBAL.USER_UUID;
+      this.user.userEmail = this.GLOBAL.USER_EMAIL;
+      this.user.userType = this.GLOBAL.UESR_TYPE;
+      this.loginDialogVisible = false;
+    } else {
+      this.axios
+        .get(this.GLOBAL.BASE_REQUEST_URL + "/gettoken")
+        .then(response => {
+          // console.log(response);
+          if (response.data.status.status === "success") {
+            // console.log("USER_NAME:", response.data.user.username);
+            this.GLOBAL.USER_NAME = response.data.user.username;
             this.GLOBAL.USER_UUID = response.data.user.userUuid;
             this.GLOBAL.USER_EMAIL = response.data.user.email;
             this.GLOBAL.UESR_TYPE = response.data.user.type;
@@ -215,8 +231,11 @@ export default {
             this.user.userEmail = this.GLOBAL.USER_EMAIL;
             this.user.userType = this.GLOBAL.UESR_TYPE;
             this.loginDialogVisible = false;
-        }
-      });
+          }
+          
+        });
+        this.loginDialogVisible = false;
+    }
   }
 };
 </script>

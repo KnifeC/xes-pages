@@ -1,8 +1,13 @@
 <template>
   <div>
-    <el-row>
+    <el-row v-loading.fullscreen.lock="fullscreenLoading">
       <el-col :md="{span:14,offset:5}" style="margin-top: 15px;">
-        <el-page-header @back="goBack" content="题目详情" style="margin-top: 25px;margin-bottom: 25px"></el-page-header>
+        <el-page-header
+          @click="goBack()"
+          @back="goBack()"
+          content="题目详情"
+          style="margin-top: 25px;margin-bottom: 25px"
+        ></el-page-header>
         <el-divider></el-divider>
         <h2>题目内容</h2>
         <h3>{{questionContent}}</h3>
@@ -21,6 +26,7 @@
 export default {
   data() {
     return {
+      fullscreenLoading: false,
       questionId: "",
       questionTags: "",
       questionContent: "",
@@ -28,13 +34,13 @@ export default {
       questionType: ""
     };
   },
-  method: {
+  methods: {
     goBack() {
-      console.log("返回上一页")
-      this.$router.history.go(-1);
+      this.$router.go(-1);
     }
   },
-  beforeCreate() {
+  created() {
+    this.fullscreenLoading = true;
     this.questionId = this.$route.params.questionid;
     this.axios
       .get(this.GLOBAL.BASE_REQUEST_URL + "/question/" + this.questionId)
@@ -49,8 +55,10 @@ export default {
         } else {
           this.$router.push("/err");
         }
+        this.fullscreenLoading = false;
       })
       .catch(err => {
+        this.fullscreenLoading = false;
         this.$router.push("/err");
       });
   }
