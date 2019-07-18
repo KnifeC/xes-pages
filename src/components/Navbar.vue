@@ -6,17 +6,17 @@
       </el-menu-item>
       <el-menu-item index="index">主页</el-menu-item>
       <el-menu-item index="question">查看题目</el-menu-item>
+      <el-menu-item index="questionbank" v-if="user.userType!==''">个人题库</el-menu-item>
       <el-menu-item index="exam" v-if="user.userType!==''">考试中心</el-menu-item>
       <el-menu-item index="group" v-if="user.userType!==''">你的小组</el-menu-item>
       <el-menu-item index="manage" v-if="user.userType==='teacher'">教师中心</el-menu-item>
       <el-menu-item index="admin" v-if="user.userType==='admin'">管理员面板</el-menu-item>
-      <el-submenu index="2">
+      <!-- <el-submenu index="2">
         <template slot="title">我的工作台</template>
         <el-menu-item index="2-1">选项1</el-menu-item>
         <el-menu-item index="2-2">选项2</el-menu-item>
         <el-menu-item index="2-3">选项3</el-menu-item>
-      </el-submenu>
-      <el-menu-item></el-menu-item>
+      </el-submenu> -->
       <el-menu-item
         style="float:right"
         @click="loginDialogVisible = true"
@@ -205,11 +205,14 @@ export default {
         if (response.data.status.status === "success") {
           // console.log("USER_NAME:", response.data.user.username);
           this.GLOBAL.USER_NAME = response.data.user.username;
-          this.GLOBAL.USER_UUID = response.data.user.userUuid;
-          this.GLOBAL.USER_EMAIL = response.data.user.email;
-          this.user.username = this.GLOBAL.USER_NAME;
-          this.user.userUuid = this.GLOBAL.USER_UUID;
-          this.user.userEmail = this.GLOBAL.USER_EMAIL;
+            this.GLOBAL.USER_UUID = response.data.user.userUuid;
+            this.GLOBAL.USER_EMAIL = response.data.user.email;
+            this.GLOBAL.UESR_TYPE = response.data.user.type;
+            this.user.username = this.GLOBAL.USER_NAME;
+            this.user.userUuid = this.GLOBAL.USER_UUID;
+            this.user.userEmail = this.GLOBAL.USER_EMAIL;
+            this.user.userType = this.GLOBAL.UESR_TYPE;
+            this.loginDialogVisible = false;
         }
       });
   }

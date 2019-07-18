@@ -19,7 +19,12 @@
     </el-row>
     <el-row v-loading="loading">
       <el-col :md="{span:14,offset:5}" style="margin-top: 15px;">
-        <question-list-item v-if="this.questionDataList!==''" :data="questionDataList"></question-list-item>
+        <div v-if="!noResult">
+          <div v-for="item in questionDataList" :key="item">
+            <question-list-item :itemdata="item"></question-list-item>
+          </div>
+        </div>
+
         <p v-if="noResult">抱歉没有查到你想要的结果</p>
       </el-col>
     </el-row>
@@ -28,20 +33,20 @@
 
 
 <script>
-import QuestionList from "./QuestionList.vue";
+import QuestionListItem from "./QuestionListItem.vue";
 
 export default {
   data() {
     return {
       path: "",
       keyWords: "",
-      questionDataList: "",
+      questionDataList: [],
       noResult: false,
       loading: false
     };
   },
   components: {
-    "question-list-item": QuestionList
+    "question-list-item": QuestionListItem
   },
   methods: {
     search() {
@@ -52,8 +57,10 @@ export default {
       this.axios
         .get(this.GLOBAL.BASE_REQUEST_URL + "/search/" + this.keyWords)
         .then(result => {
-          if (result.status.status === "success") {
-            this.questionDataList = result.data;
+          // console.log(result);
+          if (result.data.status.status === "success") {
+            this.questionDataList = result.data.questionDataList;
+            this.noResult = false;
           } else {
             this.noResult = true;
           }

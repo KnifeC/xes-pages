@@ -8,12 +8,17 @@ import QuestionDetail from './components/Question/QuestionDetail';
 import ErrorComponent from './components/ErrorComponent.vue';
 import Question from './components/Question/Question.vue';
 import Group from './components/Group/Group.vue'
+import QuestionBank from './components/QuestionBank/QuestionBank.vue';
+import Exam from './components/Exam/Exam.vue';
+
 
 const routes = [
-    { path : '/index' , component : Home },
+    { path : '/index' , component : Home ,meta:{title : 'XES Examination System'}},
     { path : '/question/:questionid' , component : QuestionDetail },
     { path : '/question', component : Question },
     { path : '/group' , component : Group },
+    { path : '/questionbank' , component : QuestionBank },
+    { path : '/exam' , component : Exam },
     { path : '/' , redirect : '/index' },
     { path : '*' , component : ErrorComponent },
 ];
