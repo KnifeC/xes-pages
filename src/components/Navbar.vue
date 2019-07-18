@@ -199,7 +199,7 @@ export default {
   },
   components: {},
   created() {},
-  mounted() {
+  beforeCreate() {
     this.axios
       .get(this.GLOBAL.BASE_REQUEST_URL + "/gettoken")
       .then(response => {
