@@ -20,7 +20,7 @@
     <el-row v-loading="loading">
       <el-col :md="{span:14,offset:5}" style="margin-top: 15px;">
         <question-list-item v-if="this.questionDataList!==''" :data="questionDataList"></question-list-item>
-        <p v-if="noResult"> 抱歉没有查到你想要的结果 </p>
+        <p v-if="noResult">抱歉没有查到你想要的结果</p>
       </el-col>
     </el-row>
   </div>
@@ -36,8 +36,8 @@ export default {
       path: "",
       keyWords: "",
       questionDataList: "",
-      noResult:false,
-      loading:false,
+      noResult: false,
+      loading: false
     };
   },
   components: {
@@ -54,13 +54,19 @@ export default {
         .then(result => {
           if (result.status.status === "success") {
             this.questionDataList = result.data;
-          }else{
+          } else {
             this.noResult = true;
           }
           this.loading = false;
         })
-        .catch(err => {
-          this.questionDataList = err;
+        .catch(() => {
+          this.noResult = true;
+          this.$message({
+            showClose: true,
+            message: "网络错误",
+            type: "error"
+          });
+          this.loading = false;
         });
     }
   },
