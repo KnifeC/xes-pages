@@ -6,19 +6,20 @@
       </el-header>
     </el-container>
     <router-view></router-view>
-    <el-divider></el-divider>
-    <el-footer>Footer</el-footer>
+    
+    <el-footer><v-footer></v-footer></el-footer>
   </div>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import navbar from "./components/Navbar.vue";
-
+import Navbar from "./components/Navbar.vue";
+import Footer from "./components/Footer.vue";
 export default {
   name: "app",
   components: {
-    "v-navbar": navbar
+    "v-navbar": Navbar,
+    "v-footer":Footer,
   }
 };
 </script>

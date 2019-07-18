@@ -1,27 +1,22 @@
 <template>
+  <div>
     <el-row>
       <el-col :md="{span:14,offset:5}">
-        <h2>考试页面还没写</h2>
+        <el-divider></el-divider>
       </el-col>
     </el-row>
+  </div>
 </template>
+
 
 <script>
 export default {
-    data(){
-        return{
-
-        }
-    },
-    methods:{
-
-    },
-    mounted(){
-        
-    }
-}
+  data() {
+    return {};
+  },
+  methods: {}
+};
 </script>
 
 <style scoped>
-
 </style>
