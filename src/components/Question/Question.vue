@@ -24,7 +24,6 @@
             <question-list-item :itemdata="item"></question-list-item>
           </div>
         </div>
-
         <p v-if="noResult">抱歉没有查到你想要的结果</p>
       </el-col>
     </el-row>

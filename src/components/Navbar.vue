@@ -4,13 +4,13 @@
       <el-menu-item index="index">
         <el-image style="height: 50px; width: 50px" :src="logourl" fit="contain"></el-image>
       </el-menu-item>
-      <el-menu-item index="index">主页</el-menu-item>
-      <el-menu-item index="question">查看题目</el-menu-item>
-      <el-menu-item index="questionbank" v-if="user.userType!==''">个人题库</el-menu-item>
-      <el-menu-item index="exam" v-if="user.userType!==''">考试中心</el-menu-item>
-      <el-menu-item index="group" v-if="user.userType!==''">你的小组</el-menu-item>
-      <el-menu-item index="manage" v-if="user.userType==='teacher'">教师中心</el-menu-item>
-      <el-menu-item index="admin" v-if="user.userType==='admin'">管理员面板</el-menu-item>
+      <el-menu-item index="/index">主页</el-menu-item>
+      <el-menu-item index="/question">查看题目</el-menu-item>
+      <el-menu-item index="/questionbank" v-if="user.userType!==''">个人题库</el-menu-item>
+      <el-menu-item index="/exam" v-if="user.userType!==''">考试中心</el-menu-item>
+      <el-menu-item index="/group" v-if="user.userType!==''">你的小组</el-menu-item>
+      <el-menu-item index="/teacher" v-if="user.userType==='teacher'">教师中心</el-menu-item>
+      <el-menu-item index="/admin" v-if="user.userType==='admin'">管理员面板</el-menu-item>
       <!-- <el-submenu index="2">
         <template slot="title">我的工作台</template>
         <el-menu-item index="2-1">选项1</el-menu-item>
@@ -46,6 +46,7 @@
             <el-form-item>
               <el-button type="primary" @click="login()" style="width:100%;">登录</el-button>
             </el-form-item>
+            <el-divider><i class="el-icon-loading"></i></el-divider>
             <el-form-item>
               <el-button @click="changeDialog()" type="success" style="width:100%;">没有账号？注册</el-button>
             </el-form-item>
@@ -84,6 +85,7 @@
             <el-form-item>
               <el-button type="primary" @click="register()" style="width:100%;">注册</el-button>
             </el-form-item>
+            <el-divider><i class="el-icon-loading"></i></el-divider>
             <el-form-item>
               <el-button @click="changeDialog()" type="success" style="width:100%;">已有账号？登录</el-button>
             </el-form-item>
@@ -103,7 +105,7 @@ export default {
     return {
       activeIndex: "",
       modes: "horizontal",
-      logourl: "../../static/logo.svg",
+      logourl: "./assets/logo.svg",
       loginDialogVisible: false,
       registerDialogVisible: false,
       user: { username: "", userUuid: "", userEmail: "", userType: "" },
