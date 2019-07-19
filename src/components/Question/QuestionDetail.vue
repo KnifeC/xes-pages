@@ -32,33 +32,75 @@
         </el-row>
       </el-col>
     </el-row>
+
+    <el-dialog :visible.sync="isDialog" :v-loading="isLoading">
+      <el-row>
+        <el-col :md="{span:12,offset:6}">
+          <div v-if="noList">你还没有个人题库，先去创建一个吧</div>
+          <div v-else v-for="item in questionBankList" :key="item">
+            <question-bank-table-item itemdata="item" :questionId="questionId"></question-bank-table-item>
+          </div>
+        </el-col>
+      </el-row>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import QuestionBankTableItem from "./../QuestionBank/QuestionBankTableItem.vue";
 export default {
   data() {
     return {
+      isLoading: false,
+      isDialog: false,
       isLogin: false,
-      noEdit: true,
+      noList: false,
       fullscreenLoading: false,
       questionId: "",
       questionTags: "",
       questionContent: "",
       questionAnswer: "",
-      questionType: ""
+      questionType: "",
+      questionBankList: []
     };
+  },
+  components: {
+    "question-bank-table-item": QuestionBankTableItem
   },
   methods: {
     goBack() {
       this.$router.go(-1);
     },
-    addToPersonalBank(){
-
+    addToPersonalBank() {
+      this.isDialog = true;
+      this.isLoading = true;
+      this.noList = false;
+      this.questionBankList = [];
+      this.axios
+        .get(this.GLOBAL.BASE_REQUEST_URL + "/searchQuestionBank/byUserId")
+        .then(result => {
+          console.log(result);
+          if (result.data.status.status === "success") {
+            if (result.data.questionBankData.length > 0) {
+              this.questionBankList = result.data.questionBankData;
+              this.isLoading = false;
+            } else {
+              this.noList = true;
+              this.isLoading = false;
+            }
+          } else {
+            this.$message({
+              showClose: true,
+              message: result.data.status.message,
+              type: result.data.status.status
+            });
+          }
+        })
+        .catch(err => {});
     }
   },
   created() {
-    if(this.GLOBAL.USER_UUID!==''){
+    if (this.GLOBAL.USER_UUID !== "") {
       this.isLogin = true;
     }
     this.fullscreenLoading = true;
