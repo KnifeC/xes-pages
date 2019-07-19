@@ -261,7 +261,7 @@ export default {
     }
   },
   components: {},
-  created() {
+  mounted() {
     this.fullscreenLoading = false;
     if (this.GLOBAL.USER_NAME !== "") {
       this.user.username = this.GLOBAL.USER_NAME;
@@ -270,16 +270,13 @@ export default {
       this.user.userType = this.GLOBAL.UESR_TYPE;
       this.loginDialogVisible = false;
     } else {
+      this.fullscreenLoading = true;
       this.axios
         .get(this.GLOBAL.BASE_REQUEST_URL + "/gettoken")
         .then(response => {
-          // console.log(response);
           if (response.data.status.status === "success") {
-            // console.log("USER_NAME:", response.data.user.username);
             this.GLOBAL.USER_NAME = response.data.user.username;
             this.GLOBAL.USER_UUID = response.data.user.userUuid;
-            // console.log(this.GLOBAL.USER_UUID);
-            // console.log(response.data.user.userUuid);
             this.GLOBAL.USER_EMAIL = response.data.user.email;
             this.GLOBAL.UESR_TYPE = response.data.user.type;
             this.user.username = this.GLOBAL.USER_NAME;
@@ -287,9 +284,11 @@ export default {
             this.user.userEmail = this.GLOBAL.USER_EMAIL;
             this.user.userType = this.GLOBAL.UESR_TYPE;
             this.loginDialogVisible = false;
+            this.fullscreenLoading = false;
           }
         });
       this.loginDialogVisible = false;
+      this.fullscreenLoading = false;
     }
   }
 };
