@@ -12,9 +12,9 @@
           <el-form-item label="题库名" prop="questionBankName">
             <el-input placeholder="请输入题库名" v-model="newQuestionBankForm.questionBankName"></el-input>
           </el-form-item>
-          <el-form-item label="可见性" prop="isVisibility">
+          <el-form-item label="可见性" prop="visibility">
             <el-select
-              v-model="newQuestionBankForm.isVisibility"
+              v-model="newQuestionBankForm.visibility"
               placeholder="请选择可见性"
               style="width:100%"
             >
@@ -37,13 +37,14 @@
 
 <script>
 import qs from "qs";
+
 export default {
   data() {
     return {
       loading: false,
       newQuestionBankForm: {
         questionBankName: "",
-        isVisibility: "不公开"
+        visibility: "不公开"
       },
       newQuestionBankRule: {
         questionBankName: [
@@ -81,7 +82,7 @@ export default {
                 this.$alert(result.data.message,result.data.status,{
                     confirmButtonText: '确定',
                     callback: action => {
-                        this.$router.go(0);
+                        this.$router.push('/index');
                     }
                 });
                 
