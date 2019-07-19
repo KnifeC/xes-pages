@@ -1,11 +1,11 @@
 <template>
-  <div>
+   <div>
     <el-row>
       <el-col :md="{span:10,offset:7}" style="margin-top: 15px;">
         <el-input
           class="grid-content"
           @keyup.enter.native="search()"
-          placeholder="请输入关键字或tag搜索"
+          placeholder="请输入关键字搜索"
           v-model="keyWords"
         >
           <el-button
@@ -18,10 +18,10 @@
       </el-col>
     </el-row>
     <el-row v-loading="loading">
-      <el-col :md="{span:14,offset:5}" style="margin-top: 15px;">
+      <el-col  style="margin-top: 15px;">
         <div v-if="!noResult">
-          <div v-for="item in questionDataList" :key="item">
-            <question-list-item :itemdata="item"></question-list-item>
+          <div v-for="item in questionBankDataList" :key="item">
+            <question-bank-list-item :itemdata="item"></question-bank-list-item>
           </div>
         </div>
         <p v-if="noResult">抱歉没有查到你想要的结果</p>
@@ -32,50 +32,50 @@
 
 
 <script>
-// import QuestionListItem from "./QuestionListItem.vue";
+import QuestionBankListItem from "./QuestionBankListItem.vue";
 
 export default {
   data() {
     return {
       path: "",
       keyWords: "",
-      questionDataList: [],
+      questionBankDataList: [],
       noResult: false,
       loading: false
     };
   },
   components: {
-    "question-list-item": QuestionListItem
+    "question-bank-list-item": QuestionBankListItem
   },
   methods: {
     search() {
-      this.$router.push({ path: "/question", query: { k: this.keyWords } });
+      this.$router.push({ path: "/questionbank/search", query: { k: this.keyWords } });
     },
-    doSearch(){
+    doSearch() {
       this.keyWords = this.$route.query.k;
       this.noResult = false;
       this.loading = true;
-      this.axios
-        .get(this.GLOBAL.BASE_REQUEST_URL + "/search/" + this.$route.query.k)
-        .then(result => {
-          // console.log(result);
-          if (result.data.status.status === "success") {
-            this.questionDataList = result.data.questionDataList;
-            this.noResult = false;
-          } else {
+        this.axios
+          .get(this.GLOBAL.BASE_REQUEST_URL + "/searchQuestionBank/byName/" + this.$route.query.k)
+          .then(result => {
+            // console.log(result);
+            if (result.data.status.status === "success") {
+              this.questionBankDataList = result.data.questionBankData;
+              this.noResult = false;
+            } else {
+              this.noResult = true;
+            }
+            this.loading = false;
+          })
+          .catch(() => {
             this.noResult = true;
-          }
-          this.loading = false;
-        })
-        .catch(() => {
-          this.noResult = true;
-          this.$message({
-            showClose: true,
-            message: "网络错误",
-            type: "error"
+            this.$message({
+              showClose: true,
+              message: "网络错误",
+              type: "error"
+            });
+            this.loading = false;
           });
-          this.loading = false;
-        });
     }
   },
 

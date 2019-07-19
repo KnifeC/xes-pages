@@ -8,7 +8,7 @@
           <span>Tags:</span>
         </el-col>
         <el-col :md="6">
-          <el-button type="primary" @click="goDetail()">查看详情</el-button>
+          <el-button style="float: right; padding: 3px 0" type="text" @click="goDetail()">查看详情</el-button>
         </el-col>
       </el-row>
       <el-divider></el-divider>
