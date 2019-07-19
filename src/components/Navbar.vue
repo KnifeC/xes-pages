@@ -273,6 +273,10 @@ export default {
       this.GLOBAL.USER_UUID = "";
       this.GLOBAL.USER_EMAIL = "";
       this.GLOBAL.UESR_TYPE = "";
+       this.user.username = "";
+      this.user.userUuid = "";
+      this.user.userEmail = "";
+      this.user.userType="";
       console.log('sf')
       this.$router.push({path: '/index'})
      
