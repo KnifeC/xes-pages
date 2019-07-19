@@ -39,8 +39,9 @@ export default {
     };
   },
   methods: {},
-  created() {
+  updated() {
     this.selfUrl = this.GLOBAL.USER_UUID;
+    // alert(this.selfUrl);
   }
 };
 </script>
