@@ -32,7 +32,7 @@
 
 
 <script>
-import QuestionListItem from "./QuestionListItem.vue";
+// import QuestionListItem from "./QuestionListItem.vue";
 
 export default {
   data() {
