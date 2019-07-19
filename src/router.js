@@ -12,6 +12,7 @@ import QuestionBank from './components/QuestionBank/QuestionBank.vue';
 import Exam from './components/Exam/Exam.vue';
 import Teacher from './components/Teacher/Teacher.vue';
 import Admin from './components/Admin/Admin.vue';
+import ExamDetail from './components/Exam/ExamDetail.vue';
 
 const routes = [
   { path: '/index', component: Home, meta: { title: 'XES Examination System' } },
@@ -27,6 +28,7 @@ const routes = [
   { path: '/admin', component: Admin, meta: { title: '管理员面板' } },
   { path: '/', redirect: '/index' },
   { path: '*', component: ErrorComponent },
+  { path: '/examdetail/:id', component: ExamDetail },
 ];
 
 const router = new VueRouter({
