@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div v-loading.fullscreen.lock="fullscreenLoading">
     <el-row>
       <el-col :md="{span:18,offset:3}" style="margin-top: 25px;">
         <el-container>
           <el-aside>
             <el-menu class="el-menu-vertical-demo" router="true">
-              <el-menu-item :index="selfUrl">
+              <el-menu-item :index="selfUrl" @click="getToken()">
                 <!-- <i class="el-icon-setting"></i> -->
                 <span slot="title">个人题库</span>
               </el-menu-item>
@@ -21,7 +21,7 @@
           </el-aside>
 
           <el-container :md="{span:18,offset:3}">
-            <el-main style="maigin-top:100px">
+            <el-main>
               <router-view></router-view>
             </el-main>
           </el-container>
@@ -35,13 +35,39 @@
 export default {
   data() {
     return {
-      selfUrl: ""
+      selfUrl: "",
+      fullscreenLoading: false
     };
   },
-  methods: {},
-  updated() {
-    this.selfUrl = this.GLOBAL.USER_UUID;
-    // alert(this.selfUrl);
+  methods: {
+    getToken() {
+      if(this.GLOBAL.USER_UUID!==''){
+        this.selfUrl = "/questionbank/" + this.GLOBAL.USER_UUID;
+        this.$router.push(this.selfUrl);
+        // console.log('通过gettoken挂载url');
+        return;
+      }
+      //下面这个获取token好像有没有都不影响——keshane
+      this.fullscreenLoading = true;
+      this.axios
+        .get(this.GLOBAL.BASE_REQUEST_URL + "/gettoken")
+        .then(response => {
+          if (response.data.status.status === "success") {
+            this.GLOBAL.USER_NAME = response.data.user.username;
+            this.GLOBAL.USER_UUID = response.data.user.userUuid;
+            this.GLOBAL.USER_EMAIL = response.data.user.email;
+            this.GLOBAL.UESR_TYPE = response.data.user.type;
+          }
+          this.fullscreenLoading = false;
+        })
+        .catch(err => {
+          this.fullscreenLoading = false;
+        });
+    }
+  },
+  mounted() {
+    this.selfUrl = "/questionbank/" + this.GLOBAL.USER_UUID;
+    // console.log('通过gettoken挂载url');
   }
 };
 </script>

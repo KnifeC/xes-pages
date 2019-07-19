@@ -153,6 +153,7 @@ export default {
       registerRules: {
         email: [
           { required: true, message: "请输入邮箱", trigger: "blur" },
+          { type: "email", message: "请输入正确的邮箱形式", trigger: "blur" },
           { type: "email", message: "请输入正确的邮箱形式", trigger: "change" },
           { validator: validateEmail, trigger: "blur" }
         ],
@@ -261,8 +262,8 @@ export default {
     }
   },
   components: {},
-  mounted() {
-    this.fullscreenLoading = false;
+  created() {
+    this.fullscreenLoading = true;
     if (this.GLOBAL.USER_NAME !== "") {
       this.user.username = this.GLOBAL.USER_NAME;
       this.user.userUuid = this.GLOBAL.USER_UUID;
