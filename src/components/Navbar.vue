@@ -6,7 +6,7 @@
       </el-menu-item>
       <el-menu-item index="/index">主页</el-menu-item>
       <el-menu-item index="/question">题目</el-menu-item>
-      <el-menu-item :index="questionbank" v-if="user.userType!==''">个人题库</el-menu-item>
+      <el-menu-item :index="questionbanklink()" v-if="user.userType!==''">个人题库</el-menu-item>
       <el-menu-item index="/exam" v-if="user.userType!==''">考试中心</el-menu-item>
       <el-menu-item index="/group" v-if="user.userType!==''">你的小组</el-menu-item>
       <el-menu-item index="/teacher" v-if="user.userType==='teacher'">教师中心</el-menu-item>
@@ -24,8 +24,8 @@
       >登录</el-menu-item>
       <el-submenu style="float:right" v-else>
         <template slot="title">{{user.username}}</template>
-      <el-menu-item >个人中心</el-menu-item>
-      <el-menu-item >登出</el-menu-item>
+        <el-menu-item>个人中心</el-menu-item>
+        <el-menu-item>登出</el-menu-item>
       </el-submenu>
     </el-menu>
 
@@ -113,7 +113,6 @@ export default {
     return {
       fullscreenLoading: false,
       activeIndex: "",
-      questionbank:"/questionbank/"+this.userUuid,
       modes: "horizontal",
       logourl: "https://i.loli.net/2019/07/18/5d30579ad7c9c27862.png",
       loginDialogVisible: false,
@@ -137,6 +136,9 @@ export default {
     };
   },
   methods: {
+    questionbanklink(){
+      return '/questionbank/'+this.user.userUuid;
+    },
     changeDialog() {
       this.loginDialogVisible = !this.loginDialogVisible;
       this.registerDialogVisible = !this.registerDialogVisible;
@@ -225,6 +227,8 @@ export default {
             // console.log("USER_NAME:", response.data.user.username);
             this.GLOBAL.USER_NAME = response.data.user.username;
             this.GLOBAL.USER_UUID = response.data.user.userUuid;
+            console.log(this.GLOBAL.USER_UUID);
+            console.log(response.data.user.userUuid);
             this.GLOBAL.USER_EMAIL = response.data.user.email;
             this.GLOBAL.UESR_TYPE = response.data.user.type;
             this.user.username = this.GLOBAL.USER_NAME;
@@ -233,9 +237,8 @@ export default {
             this.user.userType = this.GLOBAL.UESR_TYPE;
             this.loginDialogVisible = false;
           }
-          
         });
-        this.loginDialogVisible = false;
+      this.loginDialogVisible = false;
     }
   }
 };
