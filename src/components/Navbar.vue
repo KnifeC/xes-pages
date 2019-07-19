@@ -282,23 +282,12 @@ export default {
       this.GLOBAL.USER_UUID = "";
       this.GLOBAL.USER_EMAIL = "";
       this.GLOBAL.UESR_TYPE = "";
-<<<<<<< HEAD
       this.user.username = "";
       this.user.userUuid = "";
       this.user.userEmail = "";
       this.user.userType = "";
       console.log("sf");
       this.$router.push({ path: "/index" });
-=======
-       this.user.username = "";
-      this.user.userUuid = "";
-      this.user.userEmail = "";
-      this.user.userType="";
-      console.log('sf')
-      this.$router.push({path: '/index'})
-     
-    
->>>>>>> af776bfff43888c3f9d25016907dc4be2c66496f
     }
   },
 
