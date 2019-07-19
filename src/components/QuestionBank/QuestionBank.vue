@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-col :md="{span:14,offset:5}" style="margin-top: 25px;">
+      <el-col :md="{span:18,offset:3}" style="margin-top: 25px;">
         <el-container>
           <el-aside>
             <el-tabs tab-position="left">

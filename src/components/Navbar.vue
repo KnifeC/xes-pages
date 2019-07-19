@@ -6,7 +6,7 @@
       </el-menu-item>
       <el-menu-item index="/index">主页</el-menu-item>
       <el-menu-item index="/question">题目</el-menu-item>
-      <el-menu-item index="/questionbank" v-if="user.userType!==''">个人题库</el-menu-item>
+      <el-menu-item :index="questionbank" v-if="user.userType!==''">个人题库</el-menu-item>
       <el-menu-item index="/exam" v-if="user.userType!==''">考试中心</el-menu-item>
       <el-menu-item index="/group" v-if="user.userType!==''">你的小组</el-menu-item>
       <el-menu-item index="/teacher" v-if="user.userType==='teacher'">教师中心</el-menu-item>
@@ -113,6 +113,7 @@ export default {
     return {
       fullscreenLoading: false,
       activeIndex: "",
+      questionbank:"/questionbank/"+this.userUuid,
       modes: "horizontal",
       logourl: "https://i.loli.net/2019/07/18/5d30579ad7c9c27862.png",
       loginDialogVisible: false,

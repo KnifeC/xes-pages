@@ -50,11 +50,8 @@ export default {
   methods: {
     search() {
       this.$router.push({ path: "/question", query: { k: this.keyWords } });
-    }
-  },
-
-  mounted() {
-    if (this.$route.query.k) {
+    },
+    doSearch(){
       this.keyWords = this.$route.query.k;
       this.noResult = false;
       this.loading = true;
@@ -81,34 +78,19 @@ export default {
         });
     }
   },
+
+  mounted() {
+    if (this.$route.query.k) {
+      this.doSearch();
+    }
+  },
   beforeRouteUpdate(to, from, next) {
     // 在当前路由改变，但是该组件被复用时调用
     // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
     // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
     // 可以访问组件实例 `this`
-    this.loading = true;
     next();
-    this.axios
-      .get(this.GLOBAL.BASE_REQUEST_URL + "/search/" + to.query.k)
-      .then(result => {
-        // console.log(result);
-        if (result.data.status.status === "success") {
-          this.questionDataList = result.data.questionDataList;
-          this.noResult = false;
-        } else {
-          this.noResult = true;
-        }
-        this.loading = false;
-      })
-      .catch(() => {
-        this.noResult = true;
-        this.$message({
-          showClose: true,
-          message: "网络错误",
-          type: "error"
-        });
-        this.loading = false;
-      });
+    this.doSearch();
   }
 };
 </script>
