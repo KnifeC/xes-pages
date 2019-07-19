@@ -10,13 +10,13 @@
         ></el-page-header>
         <el-divider></el-divider>
         <h2>题目内容</h2>
-        <h3>{{questionContent}}</h3>
+        <p>{{questionContent}}</p>
 
         <h2>Tags</h2>
-        <h3>{{questionTags}}</h3>
+        <p>{{questionTags}}</p>
 
         <h2>题目答案</h2>
-        <h3>{{questionAnswer}}</h3>
+        <p>{{questionAnswer}}</p>
       </el-col>
     </el-row>
   </div>

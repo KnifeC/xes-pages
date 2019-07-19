@@ -4,15 +4,18 @@
     <el-col style="margin-top: 15px;">-->
     <el-card shadow="hover" style="margin-top:25px">
       <el-row>
-        <el-col :md="18" style="margin-top: 15px;">
-          <span>Tags:</span>
+        <el-col :md="10" >
+          <p>{{itemdata.questionBankName}}</p>
+        </el-col>
+        <el-col :md="8" >
+          <p>创建者:{{itemdata.ownerName}}</p>
         </el-col>
         <el-col :md="6">
           <el-button style="float: right; padding: 3px 0" type="text" @click="goDetail()">查看详情</el-button>
         </el-col>
       </el-row>
-      <el-divider></el-divider>
-      <el-row>{{itemdata.questionContent}}</el-row>
+      <!-- <el-divider></el-divider>
+      <el-row>{{itemdata.questionContent}}</el-row>-->
     </el-card>
     <!-- </el-col>
     </el-row>-->
@@ -24,9 +27,7 @@
 export default {
   data() {
     return {
-      path: "",
-      keyWords: "",
-      questionDataList: ""
+      path: ""
     };
   },
   props: {
@@ -34,7 +35,9 @@ export default {
   },
   methods: {
     goDetail() {
-      this.$router.push({ path: "/question/" + this.itemdata.questionId });
+      this.$router.push({
+        path: "/questionbank/detail/" + this.itemdata.questionBankId
+      });
     }
   },
   beforeCreate() {},

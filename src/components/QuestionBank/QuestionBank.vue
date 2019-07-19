@@ -1,18 +1,29 @@
 <template>
   <div>
     <el-row>
-      <el-col :md="{span:14,offset:5}" style="margin-top: 25px;">
+      <el-col :md="{span:18,offset:3}" style="margin-top: 25px;">
         <el-container>
           <el-aside>
-            <el-tabs tab-position="left">
-              <el-tab-pane label="你的题库"><router-link to='questionbank/'></router-link></el-tab-pane>
-              <el-tab-pane label="你的题库"></el-tab-pane>
-              <el-tab-pane label="新建题库"></el-tab-pane>
-              <el-tab-pane label="管理题库"></el-tab-pane>
-            </el-tabs>
+            <el-menu class="el-menu-vertical-demo" router="true">
+              <el-menu-item :index="selfUrl">
+                <!-- <i class="el-icon-setting"></i> -->
+                <span slot="title">个人题库</span>
+              </el-menu-item>
+              <el-menu-item index="search">
+                <!-- <i class="el-icon-setting"></i> -->
+                <span>搜索题库</span>
+              </el-menu-item>
+              <el-menu-item index="new">
+                <!-- <i class="el-icon-setting"></i> -->
+                <span slot="title">新建题库</span>
+              </el-menu-item>
+            </el-menu>
           </el-aside>
-          <el-container style="text-align:center">
-            <el-main style="maigin-top:100px">MIADISADJ</el-main>
+
+          <el-container :md="{span:18,offset:3}">
+            <el-main style="maigin-top:100px">
+              <router-view></router-view>
+            </el-main>
           </el-container>
         </el-container>
       </el-col>
@@ -23,10 +34,14 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      selfUrl: ""
+    };
   },
   methods: {},
-  mounted() {}
+  created() {
+    this.selfUrl = this.GLOBAL.USER_UUID;
+  }
 };
 </script>
 

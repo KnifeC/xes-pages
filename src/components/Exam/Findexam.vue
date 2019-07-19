@@ -1,5 +1,5 @@
 <template>
-   <div >
+  <div>
     <el-row>
       <el-col :md="{span:10,offset:7}" style="margin-top: 15px;">
         <el-input
@@ -17,6 +17,7 @@
         </el-input>
       </el-col>
     </el-row>
+
     <el-row v-loading="loading" >
       <el-col :md="{span:14,offset:5}" >
             <el-table v-if="this.examDataList!==''" 
@@ -48,10 +49,10 @@
               </el-table-column>
         </el-table>
         <p v-if="noResult" style="margin: 0 auto;"> 抱歉没有查到你想要的结果 </p>
+
       </el-col>
     </el-row>
   </div>
- 
 </template>
 <script>
   import Axios from 'axios'
@@ -75,11 +76,11 @@ import { constants } from 'crypto';
         this.noResult = false;
           Axios.get(this.GLOBAL.BASE_REQUEST_URL+"/searchAllExamination/"+this.keyWords.examinationName).then((response)=> {
           console.log(response);
-          if(response.data.status.status==="success"){
-            this.examDataList=response.data.examinationData;
+          if (response.data.status.status === "success") {
+            this.examDataList = response.data.examinationData;
             this.noResult = false;
-          }else{
-             this.noResult = true;
+          } else {
+            this.noResult = true;
           }
           }).catch((error)=>{
               console.log(error)
@@ -100,4 +101,5 @@ import { constants } from 'crypto';
       }
       
   }
+;
 </script>
