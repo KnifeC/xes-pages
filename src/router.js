@@ -13,6 +13,7 @@ import Exam from './components/Exam/Exam.vue';
 import Teacher from './components/Teacher/Teacher.vue';
 import Admin from './components/Admin/Admin.vue';
 import ExamDetail from './components/Exam/ExamDetail.vue';
+import UserInfo from './components/UserInfo.vue'
 import PersonalBank from './components/QuestionBank/PersonalBank.vue';
 import SearchBank from './components/QuestionBank/SearchBank.vue';
 import NewQuestionBank from './components/QuestionBank/NewQuestionBank.vue';
@@ -40,6 +41,7 @@ const routes = [
   { path: '/', redirect: '/index' },
   { path: '*', component: ErrorComponent },
   { path: '/examdetail/:id', component: ExamDetail },
+  { path: '/userinfo', component: UserInfo },
 ];
 
 const router = new VueRouter({
