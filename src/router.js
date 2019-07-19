@@ -12,6 +12,7 @@ import QuestionBank from './components/QuestionBank/QuestionBank.vue';
 import Exam from './components/Exam/Exam.vue';
 import Teacher from './components/Teacher/Teacher.vue';
 import Admin from './components/Admin/Admin.vue';
+import ExamDetail from './components/Exam/ExamDetail.vue';
 import PersonalBank from './components/QuestionBank/PersonalBank.vue';
 import SearchBank from './components/QuestionBank/SearchBank.vue';
 import NewQuestionBank from './components/QuestionBank/NewQuestionBank.vue';
@@ -23,7 +24,7 @@ const routes = [
   { path: '/question/:questionid', component: QuestionDetail, meta: { title: '题目详情' } },
   { path: '/question', component: Question, meta: { title: '题目' }, },
   { path: '/group', component: Group, meta: { title: '小组' } },
-  { path: '/questionbank/detail/:questionBankId', component: QuestionBankDetail, meta: { title: '题库详情' } },
+  { path: '/questionbank/detail/:questionBankId', component: QuestionBankDetail , meta:{title:'题库详情'}},
   {
     path: '/questionbank',
     component: QuestionBank,
@@ -38,6 +39,7 @@ const routes = [
   { path: '/admin', component: Admin, meta: { title: '管理员面板' } },
   { path: '/', redirect: '/index' },
   { path: '*', component: ErrorComponent },
+  { path: '/examdetail/:id', component: ExamDetail },
 ];
 
 const router = new VueRouter({

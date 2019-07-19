@@ -42,8 +42,8 @@ export default {
         } else {
           this.$message({
             showClose: true,
-            message: result.data.message,
-            type: result.data.status
+            message: response.data.message,
+            type: response.data.status
           });
         }
       })
