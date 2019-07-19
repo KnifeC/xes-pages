@@ -10,23 +10,23 @@
         ></el-page-header>
         <el-divider></el-divider>
         <h2>考试编号</h2>
-        <h3>{{examinationId}}</h3>
+        <h4>{{ExaminationId}}</h4>
 
         <h2>考试科目</h2>
-        <h3>{{ExaminationName}}</h3>
+        <h4>{{ExaminationName}}</h4>
 
         <h2>创建者编号</h2>
-        <h3>{{creatorId}}</h3>
+        <h4>{{creatorId}}</h4>
 
         <h2>考试创建者</h2>
-        <h3>{{ExaminationCreator}}</h3>
+        <h4>{{ExaminationCreator}}</h4>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-  import Axios from 'axios'
+import Axios from 'axios'
 export default {
   data() {
     return {
@@ -39,11 +39,11 @@ export default {
   },
   created: function() {
       
-      Axios.get(this.GLOBAL.BASE_REQUEST_URL+"/searchOneExamination/"+this.$route.params.id).then((response)=> {
+      Axios.get(this.GLOBAL.BASE_REQUEST_URL+"/searchExamination/byId/"+this.$route.params.id).then((response)=> {
           console.log(response)
           if(response.data.status.status==="success"){
             this.ExaminationId=response.data.examinationData[0].examinationId;
-            this.ExaminationName=response.data.examinationData[0].ExaminationName;
+            this.ExaminationName=response.data.examinationData[0].examinationName;
             this.creatorId=response.data.examinationData[0].creatorId;
             this.ExaminationCreator=response.data.examinationData[0].creatorName;
             this.noResult = false;

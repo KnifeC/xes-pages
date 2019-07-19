@@ -18,29 +18,19 @@
       </el-col>
     </el-row>
 
-    <el-row v-loading="loading" >
+    <el-row  >
       <el-col :md="{span:14,offset:5}" >
             <el-table v-if="this.examDataList!==''" 
               :data="examDataList"
               stripe
               style="width: 80%; margin: 0 auto;"
               @row-click="openDetails">
-              <!-- <el-table-column
-                  prop="examinationId"
-                  label="考试编号"
-                  width="180">
-              </el-table-column> -->
               <el-table-column
                   prop="examinationName"
                   label="考试名称"
                   align="center"
                 >
               </el-table-column>
-              <!-- <el-table-column
-                  prop="creatorId"
-                  label="创建者编号"
-                  width="180">
-              </el-table-column> -->
               <el-table-column
                   align="center"
                   prop="creatorName"
@@ -56,8 +46,8 @@
 </template>
 <script>
   import Axios from 'axios'
-import { log } from 'util';
-import { constants } from 'crypto';
+  import { log } from 'util';
+  import { constants } from 'crypto';
   export default {
     data() {
       return {
@@ -69,12 +59,30 @@ import { constants } from 'crypto';
         noResult : false
       }
     },
+     created: function() {
+       Axios.get(this.GLOBAL.BASE_REQUEST_URL+"/searchExamination/byUserId/"+this.GLOBAL.USER_UUID).then((response)=> {
+          console.log(response.data);
+          if (response.data.status.status === "success") {
+            this.examDataList = response.data.examinationData;
+            this.noResult = false;
+          } else {
+            this.noResult = true;
+          }
+          }).catch((error)=>{
+              console.log(error)
+              this.noResult = true;
+              this.$message({
+              showClose: true,
+              message: "网络错误",
+              type: "error"
+              });
+            })
+     },
     methods: {
-      
       search() {
         this.examDataList="";
         this.noResult = false;
-          Axios.get(this.GLOBAL.BASE_REQUEST_URL+"/searchAllExamination/"+this.keyWords.examinationName).then((response)=> {
+          Axios.get(this.GLOBAL.BASE_REQUEST_URL+"/searchExamination/byName/"+this.keyWords.examinationName).then((response)=> {
           console.log(response);
           if (response.data.status.status === "success") {
             this.examDataList = response.data.examinationData;
