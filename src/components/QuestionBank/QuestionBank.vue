@@ -38,16 +38,7 @@ export default {
       selfUrl: ""
     };
   },
-  methods: {
-    goRouter(road) {
-      console.log("进行路由");
-      if (road === "") {
-        this.$router.replace(this.selfUrl);
-      } else {
-        this.$router.replace(road);
-      }
-    }
-  },
+  methods: {},
   created() {
     this.selfUrl = "/questionbank/" + this.GLOBAL.USER_UUID;
   }

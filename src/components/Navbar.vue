@@ -34,7 +34,12 @@
         <el-col :md="{span:12,offset:6}">
           <h2>登录</h2>
           <!-- :rules="loginRules" -->
-          <el-form @keyup.enter.native="login()" ref="loginForm">
+          <el-form
+            @keyup.enter.native="validateLogin()"
+            ref="loginForm"
+            :rules="loginRules"
+            :model="loginForm"
+          >
             <el-form-item prop="email">
               <el-input placeholder="请输入EMAIL" v-model="loginForm.email" style="width:100%;"></el-input>
             </el-form-item>
@@ -48,7 +53,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="login()" style="width:100%;">登录</el-button>
+              <el-button type="primary" @click="validateLogin()" style="width:100%;">登录</el-button>
             </el-form-item>
             <el-divider>
               <i class="el-icon-loading"></i>
@@ -65,7 +70,12 @@
       <el-row>
         <el-col :md="{span:12,offset:6}">
           <h2>注册</h2>
-          <el-form @keyup.enter.native="register()" :rules="registerRules" ref="registerForm">
+          <el-form
+            @keyup.enter.native="validateRegister()"
+            :rules="registerRules"
+            ref="registerForm"
+            :model="registerForm"
+          >
             <el-form-item prop="email">
               <el-input placeholder="请输入EMAIL" v-model="registerForm.email" style="width:100%;"></el-input>
             </el-form-item>
@@ -89,7 +99,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="register()" style="width:100%;">注册</el-button>
+              <el-button type="primary" @click="validateRegister()" style="width:100%;">注册</el-button>
             </el-form-item>
             <el-divider>
               <i class="el-icon-loading"></i>
@@ -110,6 +120,16 @@ export default {
   name: "navbar",
   props: {},
   data() {
+    var validateEmail = (rule, value, callback) => {
+      callback();
+    };
+    var validateRepass = (rule, value, callback) => {
+      if (value !== this.registerForm.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
     return {
       fullscreenLoading: false,
       activeIndex: "",
@@ -121,27 +141,58 @@ export default {
       loginForm: { email: "", password: "" },
       registerForm: { email: "", username: "", password: "", re_password: "" },
       loginRules: {
-        email: [{ required: true, message: "请输入邮箱", trigger: "blur" }],
+        email: [
+          { required: true, message: "请输入邮箱", trigger: "blur" },
+          { type: "email", message: "请输入正确的邮箱形式", trigger: "change" }
+        ],
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
-          {
-            min: 6,
-            max: 18,
-            message: "长度在6到18个字符",
-            trigger: "change"
-          }
+          { min: 6, max: 18, message: "长度在6到18个字符", trigger: "change" }
         ]
       },
-      registerRules: {}
+      registerRules: {
+        email: [
+          { required: true, message: "请输入邮箱", trigger: "blur" },
+          { type: "email", message: "请输入正确的邮箱形式", trigger: "change" },
+          { validator: validateEmail, trigger: "blur" }
+        ],
+        username: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          { min: 6, max: 18, message: "长度在6到18个字符", trigger: "change" }
+        ],
+        re_password: [
+          { required: true, message: "请再次输入密码", trigger: "blur" },
+          { validator: validateRepass, trigger: "change" }
+        ]
+      }
     };
   },
   methods: {
-    questionbanklink(){
-      return '/questionbank/'+this.user.userUuid;
+    questionbanklink() {
+      return "/questionbank/" + this.user.userUuid;
     },
     changeDialog() {
       this.loginDialogVisible = !this.loginDialogVisible;
       this.registerDialogVisible = !this.registerDialogVisible;
+    },
+    validateLogin() {
+      this.$refs["loginForm"].validate(valid => {
+        if (valid) {
+          this.login();
+        } else {
+          return false;
+        }
+      });
+    },
+    validateRegister() {
+      this.$refs["registerForm"].validate(valid => {
+        if (valid) {
+          this.register();
+        } else {
+          return false;
+        }
+      });
     },
     login() {
       var data = qs.stringify(this.loginForm);

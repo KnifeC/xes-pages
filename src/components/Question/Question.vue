@@ -24,7 +24,7 @@
             <question-list-item :itemdata="item"></question-list-item>
           </div>
         </div>
-        <p v-if="noResult">抱歉没有查到你想要的结果</p>
+        <p v-if="noResult" style="text-align:center">抱歉没有查到你想要的结果</p>
       </el-col>
     </el-row>
   </div>
@@ -45,13 +45,24 @@ export default {
     };
   },
   components: {
-    "question-list-item": QuestionListItem,
+    "question-list-item": QuestionListItem
   },
   methods: {
     search() {
-      this.$router.push({ path: "/question", query: { k: this.keyWords } });
+      if (this.keyWords === "") {
+        this.$message({
+          showClose: true,
+          message: "请填写关键字",
+          type: "warning"
+        });
+        return ;
+      }
+      this.$router.push({
+        path: "/question",
+        query: { k: this.keyWords }
+      });
     },
-    doSearch(){
+    doSearch() {
       this.keyWords = this.$route.query.k;
       this.noResult = false;
       this.loading = true;
@@ -89,7 +100,7 @@ export default {
     // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
     // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
     // 可以访问组件实例 `this`
-    next(); 
+    next();
     this.doSearch();
   }
 };
