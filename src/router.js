@@ -38,10 +38,11 @@ const routes = [
   { path: '/exam', component: Exam, meta: { title: '考试' } },
   { path: '/teacher', component: Teacher, meta: { title: '教师面板' } },
   { path: '/admin', component: Admin, meta: { title: '管理员面板' } },
-  { path: '/', redirect: '/index' },
-  { path: '*', component: ErrorComponent },
   { path: '/examdetail/:id', component: ExamDetail },
   { path: '/userinfo', component: UserInfo },
+  { path: '/', redirect: '/index' },
+  { path: '*', component: ErrorComponent },
+
 ];
 
 const router = new VueRouter({
