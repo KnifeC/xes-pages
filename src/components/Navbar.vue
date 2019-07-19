@@ -24,11 +24,10 @@
       >登录</el-menu-item>
       <el-submenu style="float:right" v-else>
         <template slot="title">{{user.username}}</template>
-        <el-menu-item>个人中心</el-menu-item>
-        <el-menu-item>登出</el-menu-item>
+        <el-menu-item @click="Personal">个人中心</el-menu-item>
+        <el-menu-item @click="logout">登出</el-menu-item>
       </el-submenu>
     </el-menu>
-
     <el-dialog :visible.sync="loginDialogVisible">
       <el-row>
         <el-col :md="{span:12,offset:6}">
@@ -115,6 +114,7 @@
 </template>
 
 <script>
+import Axios from 'axios'
 import qs from "qs";
 export default {
   name: "navbar",
@@ -259,8 +259,29 @@ export default {
             type: "error"
           });
         });
+    },
+    Personal(){
+      var id = this.GLOBAL.USER_UUID
+      console.log(id)
+      this.$router.push({path: 'userinfo/' })
+    },
+    logout(){
+      //this.axios.get(this.GLOBAL.BASE_REQUEST_URL+"/logout")
+      this.axios.get(this.GLOBAL.BASE_REQUEST_URL+"/logout").then(response=>{
+        console.log(response);
+      })
+      this.GLOBAL.USER_NAME = "";
+      this.GLOBAL.USER_UUID = "";
+      this.GLOBAL.USER_EMAIL = "";
+      this.GLOBAL.UESR_TYPE = "";
+      console.log('sf')
+      this.$router.push({path: '/index'})
+     
+    
     }
   },
+  
+ 
   components: {},
   created() {
     this.fullscreenLoading = true;
