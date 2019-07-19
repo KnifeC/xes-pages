@@ -36,11 +36,11 @@
 </template>
 
 <script>
-import qs from 'qs';
+import qs from "qs";
 export default {
   data() {
     return {
-      loading:false,
+      loading: false,
       newQuestionBankForm: {
         questionBankName: "",
         isVisibility: "不公开"
@@ -64,22 +64,38 @@ export default {
   },
   methods: {
     submit() {
-      this.$refs[newQuestionBankForm].validate(valid => {
+      this.$refs["newQuestionBankForm"].validate(valid => {
         if (valid) {
-          data = qs.stringfy(this.newQuestionBankForm);
-          this.axios.post(this.GLOBAL.BASE_REQUEST_URL+'createQuestionBank',data).then((result) => {
+          var data = qs.stringify(this.newQuestionBankForm);
+          this.axios
+            .post(this.GLOBAL.BASE_REQUEST_URL + "/createQuestionBank", data)
+            .then(result => {
               console.log(result);
-          }).catch((err) => {
+              if (result.data.status.status === "success") {
+                this.$message({
+                  showClose: true,
+                  message: result.data.status.message,
+                  type: result.data.status.status
+                });
+              } else {
+                this.$alert(result.data.message,result.data.status,{
+                    confirmButtonText: '确定',
+                    callback: action => {
+                        this.$router.go(0);
+                    }
+                });
+                
+              }
+            })
+            .catch(err => {
               console.log(err);
-          });
+            });
         } else {
           return false;
         }
       });
     },
-    doSubmit(){
-
-    }
+    doSubmit() {}
   }
 };
 </script>
