@@ -8,7 +8,7 @@
       <el-menu-item index="/question">题目</el-menu-item>
       <el-menu-item :index="questionbanklink()" v-if="user.userType!==''">个人题库</el-menu-item>
       <el-menu-item index="/exam" v-if="user.userType!==''">考试中心</el-menu-item>
-      <el-menu-item index="/group" v-if="user.userType!==''">你的小组</el-menu-item>
+      <!-- <el-menu-item index="/group" v-if="user.userType!==''">你的小组</el-menu-item> -->
       <el-menu-item index="/teacher" v-if="user.userType==='teacher'">教师中心</el-menu-item>
       <el-menu-item index="/admin" v-if="user.userType==='admin'">管理员面板</el-menu-item>
       <!-- <el-submenu index="2">
@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 import qs from "qs";
 export default {
   name: "navbar",
@@ -153,6 +153,7 @@ export default {
       registerRules: {
         email: [
           { required: true, message: "请输入邮箱", trigger: "blur" },
+          { type: "email", message: "请输入正确的邮箱形式", trigger: "blur" },
           { type: "email", message: "请输入正确的邮箱形式", trigger: "change" },
           { validator: validateEmail, trigger: "blur" }
         ],
@@ -196,6 +197,7 @@ export default {
     },
     login() {
       var data = qs.stringify(this.loginForm);
+      this.fullscreenLoading = true;
       this.axios
         .post(this.GLOBAL.BASE_REQUEST_URL + "/login", data)
         .then(response => {
@@ -217,6 +219,7 @@ export default {
             this.user.userType = this.GLOBAL.UESR_TYPE;
             this.loginDialogVisible = false;
           }
+          this.fullscreenLoading = false;
         })
         .catch(() => {
           // console.log(error);
@@ -225,12 +228,14 @@ export default {
             message: "网络错误",
             type: "error"
           });
+          this.fullscreenLoading = false;
         });
       this.loginForm.email = "";
       this.loginForm.password = "";
     },
     register() {
       var data = qs.stringify(this.registerForm);
+      this.fullscreenLoading = true;
       this.axios
         .post(this.GLOBAL.BASE_REQUEST_URL + "/register", data)
         .then(response => {
@@ -249,6 +254,7 @@ export default {
             this.registerForm.password = "";
             this.registerForm.re_password = "";
           }
+          this.fullscreenLoading = false;
         })
         .catch(() => {
           // console.log(error);
@@ -258,13 +264,14 @@ export default {
             type: "error"
           });
         });
+      this.fullscreenLoading = false;
     },
-    Personal(){
-      var id = this.GLOBAL.USER_UUID
-      console.log(id)
-      this.$router.push({path: 'userinfo/' })
+    Personal() {
+      var id = this.GLOBAL.USER_UUID;
+      console.log(id);
+      this.$router.push({ path: "userinfo/" });
     },
-    logout(){
+    logout() {
       //this.axios.get(this.GLOBAL.BASE_REQUEST_URL+"/logout")
       this.axios.get(this.GLOBAL.BASE_REQUEST_URL+"/logout").then(response=>{
         console.log(response);
@@ -277,19 +284,18 @@ export default {
       this.GLOBAL.USER_UUID = "";
       this.GLOBAL.USER_EMAIL = "";
       this.GLOBAL.UESR_TYPE = "";
-       this.user.username = "";
+      this.user.username = "";
       this.user.userUuid = "";
       this.user.userEmail = "";
-      this.user.userType="";
-      console.log('sf')
-      this.$router.push({path: '/index'})
-     
-    
+      this.user.userType = "";
+      console.log("sf");
+      this.$router.push({ path: "/index" });
     }
   },
+
   components: {},
-  mounted() {
-    this.fullscreenLoading = false;
+  created() {
+    this.fullscreenLoading = true;
     if (this.GLOBAL.USER_NAME !== "") {
       this.user.username = this.GLOBAL.USER_NAME;
       this.user.userUuid = this.GLOBAL.USER_UUID;

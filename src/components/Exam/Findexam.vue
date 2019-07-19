@@ -18,71 +18,81 @@
       </el-col>
     </el-row>
 
-    <el-row  >
-      <el-col :md="{span:14,offset:5}" >
-            <el-table v-if="this.examDataList!==''" 
-              :data="examDataList"
-              stripe
-              style="width: 80%; margin: 0 auto;"
-              @row-click="openDetails">
-              <el-table-column
-                  prop="examinationName"
-                  label="考试名称"
-                  align="center"
-                >
-              </el-table-column>
-              <el-table-column
-                  align="center"
-                  prop="creatorName"
-                  label="考试创建者"
-                  >
-              </el-table-column>
+    <el-row>
+      <el-col :md="{span:14,offset:5}">
+        <el-table
+          v-if="this.examDataList!==''"
+          :data="examDataList"
+          stripe
+          style="width: 80%; margin: 0 auto;"
+          @row-click="openDetails"
+        >
+          <el-table-column prop="examinationName" label="考试名称" align="center"></el-table-column>
+          <el-table-column align="center" prop="creatorName" label="考试创建者"></el-table-column>
         </el-table>
-        <p v-if="noResult" style="margin: 0 auto;"> 抱歉没有查到你想要的结果 </p>
-
+        <p v-if="noResult" style="margin: 0 auto;">抱歉没有查到你想要的结果</p>
       </el-col>
     </el-row>
   </div>
 </template>
 <script>
-  import Axios from 'axios'
-  import { log } from 'util';
-  import { constants } from 'crypto';
-  export default {
-    data() {
-      return {
-          keyWords: {
-          examinationId: '',
-          examinationName: ''
-        },
-        examDataList:[],
-        noResult : false
+import Axios from "axios";
+import { log } from "util";
+import { constants } from "crypto";
+export default {
+  data() {
+    return {
+      keyWords: {
+        examinationId: "",
+        examinationName: ""
+      },
+      examDataList: [],
+      noResult: false
+    };
+  },
+  created: function() {
+    Axios.get(
+      this.GLOBAL.BASE_REQUEST_URL +
+        "/searchExamination/byUserId/" +
+        this.GLOBAL.USER_UUID
+    )
+      .then(response => {
+        console.log(response.data);
+        if (response.data.status.status === "success") {
+          this.examDataList = response.data.examinationData;
+          this.noResult = false;
+        } else {
+          this.noResult = true;
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        this.noResult = true;
+        this.$message({
+          showClose: true,
+          message: "网络错误",
+          type: "error"
+        });
+      });
+  },
+  methods: {
+    search() {
+      if (this.keyWords.examinationName === "") {
+        this.$message({
+          showClose: true,
+          message: "请填写关键字",
+          type: "warning"
+        });
+        return;
       }
-    },
-     created: function() {
-       Axios.get(this.GLOBAL.BASE_REQUEST_URL+"/searchExamination/byUserId/"+this.GLOBAL.USER_UUID).then((response)=> {
-          console.log(response.data);
-          if (response.data.status.status === "success") {
-            this.examDataList = response.data.examinationData;
-            this.noResult = false;
-          } else {
-            this.noResult = true;
-          }
-          }).catch((error)=>{
-              console.log(error)
-              this.noResult = true;
-              this.$message({
-              showClose: true,
-              message: "网络错误",
-              type: "error"
-              });
-            })
-     },
-    methods: {
-      search() {
-        this.examDataList="";
-        this.noResult = false;
-          Axios.get(this.GLOBAL.BASE_REQUEST_URL+"/searchExamination/byName/"+this.keyWords.examinationName).then((response)=> {
+      this.examDataList = "";
+      this.noResult = false;
+      Axios.get(
+        this.GLOBAL.BASE_REQUEST_URL +
+          "/searchExamination/byName/" +
+          this.keyWords.examinationName
+      )
+        .then(response => {
           console.log(response);
           if (response.data.status.status === "success") {
             this.examDataList = response.data.examinationData;
@@ -90,24 +100,22 @@
           } else {
             this.noResult = true;
           }
-          }).catch((error)=>{
-              console.log(error)
-              this.noResult = true;
-              this.$message({
-              showClose: true,
-              message: "网络错误",
-              type: "error"
-              });
-            })
-    
-        },
-        openDetails(r,c,e){
-          var id = r.examinationId
-          console.log(id)
-          this.$router.push({path: 'examdetail/' + id})
-        }
-      }
-      
+        })
+        .catch(error => {
+          console.log(error);
+          this.noResult = true;
+          this.$message({
+            showClose: true,
+            message: "网络错误",
+            type: "error"
+          });
+        });
+    },
+    openDetails(r, c, e) {
+      var id = r.examinationId;
+      console.log(id);
+      this.$router.push({ path: "examdetail/" + id });
+    }
   }
-;
+};
 </script>
