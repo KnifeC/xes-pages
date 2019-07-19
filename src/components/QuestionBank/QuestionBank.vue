@@ -40,7 +40,7 @@ export default {
   },
   methods: {},
   created() {
-    this.selfUrl = "/questionbank/" + this.GLOBAL.USER_UUID;
+    this.selfUrl = this.GLOBAL.USER_UUID;
   }
 };
 </script>

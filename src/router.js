@@ -23,7 +23,7 @@ const routes = [
   { path: '/question/:questionid', component: QuestionDetail, meta: { title: '题目详情' } },
   { path: '/question', component: Question, meta: { title: '题目' } , },
   { path: '/group', component: Group, meta: { title: '小组' } },
-  // { path: '/questionbank/detail/:questionBankId', component: QuestionBankDetail , meta:{title:'题库详情'}},
+  { path: '/questionbank/detail/:questionBankId', component: QuestionBankDetail , meta:{title:'题库详情'}},
   {
     path: '/questionbank',
     component: QuestionBank,
