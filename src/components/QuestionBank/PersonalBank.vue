@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import QuestionBankListItem from './QuestionBankListItem';
+import QuestionBankListItem from "./QuestionBankListItem";
 export default {
   data() {
     return {
@@ -21,8 +21,8 @@ export default {
       questionBankDataList: []
     };
   },
-  components:{
-      'question-bank-list-item':QuestionBankListItem,
+  components: {
+    "question-bank-list-item": QuestionBankListItem
   },
   created() {
     this.loading = true;
@@ -42,8 +42,8 @@ export default {
         } else {
           this.$message({
             showClose: true,
-            message: response.data.message,
-            type: response.data.status
+            message: result.data.message,
+            type: result.data.status
           });
         }
       })
