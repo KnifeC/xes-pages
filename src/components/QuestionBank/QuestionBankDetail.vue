@@ -9,13 +9,35 @@
           style="margin-top: 25px;margin-bottom: 25px"
         ></el-page-header>
         <el-divider></el-divider>
-        <h2>题库名——{{questionBankData.questionBankName}}</h2>
-        <p>创建者——{{questionBankData.ownerName}}</p>
-        <p>可见性——{{questionBankData.visibility}}</p>
+        <el-row>
+          <el-col :md="{span:18,offset:3}" style="margin-top: 15px;">
+            <el-form
+              :model="questionBankForm"
+              :rules="rules"
+              ref="ruleForm"
+              label-width="100px"
+              class="demo-ruleForm"
+            >
+              <el-form-item label="题库名" prop="questionBankName">
+                <el-input v-model="questionBankForm.questionBankName" :readonly="noEdit"></el-input>
+              </el-form-item>
+              <el-form-item label="可见性" prop="visibility">
+                <el-input v-model="questionBankForm.visibility" :readonly="noEdit"></el-input>
+              </el-form-item>
+              <el-form-item label="创建者" prop="ownerName">
+                <el-input v-model="questionBankForm.ownerName" readonly="true"></el-input>
+              </el-form-item>
+              <el-form-item style="text-align:center">
+                <el-button type="primary" @click="noEdit=fasle">编辑</el-button>
+                <el-button type="primary" v-if="!noEdit" @click="changeQuestionBank()">提交</el-button>
+              </el-form-item>
+            </el-form>
+          </el-col>
+        </el-row>
         <div>
           <p v-if="noQuestion">该题库没有题目</p>
           <div v-else v-for="item in questionDataList" :key="item">
-              <question-list-item itemdata="item"></question-list-item>
+            <question-list-item itemdata="item"></question-list-item>
           </div>
         </div>
       </el-col>
@@ -24,11 +46,12 @@
 </template>
 
 <script>
-import QuestionListItem from './../Question/QuestionListItem.vue';
-import qs from 'qs';
+import QuestionListItem from "./../Question/QuestionListItem.vue";
+import qs from "qs";
 export default {
   data() {
     return {
+      noEdit: true,
       fullscreenLoading: false,
       questionBankData: {
         questionBankId: "",
@@ -36,12 +59,18 @@ export default {
         visibility: "",
         ownerName: ""
       },
+      questionBankForm: {
+        questionBankId: "",
+        questionBankName: "",
+        visibility: "",
+        ownerName: ""
+      },
       questionDataList: "",
-      noQuestion:false
+      noQuestion: false
     };
   },
-  components:{
-    'question-list-item':QuestionListItem
+  components: {
+    "question-list-item": QuestionListItem
   },
   methods: {
     goBack() {
@@ -69,6 +98,7 @@ export default {
               result.data.questionBankDataList[0].visibility;
             this.questionBankData.ownerName =
               result.data.questionBankDataList[0].ownerName;
+            this.questionBankForm = this.questionBankData;
             if (result.data.status.status === "success") {
               this.questionDataList = result.data.questionDataList;
               this.noQuestion = false;
@@ -98,6 +128,9 @@ export default {
             type: "error"
           });
         });
+    },
+    changeQuestionBank() {
+      this.noEdit = true;
     }
   },
   created() {

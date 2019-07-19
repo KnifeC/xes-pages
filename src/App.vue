@@ -7,9 +7,9 @@
     </el-container>
     <router-view></router-view>
 
-    <el-footer>
+    <!-- <el-footer>
       <v-footer class="footer"></v-footer>
-    </el-footer>
+    </el-footer> -->
   </div>
 </template>
 
