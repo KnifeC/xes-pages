@@ -6,7 +6,7 @@ import global_ from './global.js';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import router from './router.js';
-
+import store from './vuex/store.js';
 
 
 
@@ -24,6 +24,7 @@ Vue.prototype.GLOBAL = global_;
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')
 

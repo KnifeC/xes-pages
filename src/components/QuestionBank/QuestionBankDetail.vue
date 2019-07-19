@@ -10,13 +10,13 @@
         ></el-page-header>
         <el-divider></el-divider>
         <h2>题目内容</h2>
-        <p>{{questionContent}}</p>
+        <p></p>
 
         <h2>Tags</h2>
-        <p>{{questionTags}}</p>
+        <p></p>
 
         <h2>题目答案</h2>
-        <p>{{questionAnswer}}</p>
+        <p></p>
       </el-col>
     </el-row>
   </div>
@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       fullscreenLoading: false,
-      questionBankData:[],
+      questionBankData: []
     };
   },
   methods: {
@@ -38,7 +38,20 @@ export default {
   created() {
     this.fullscreenLoading = true;
     this.questionId = this.$route.params.questionBankId;
-    
+    this.axios
+      .get(
+        this.GLOBAL.BASE_REQUEST_URL +
+          "/questionBank/" +
+          this.$route.params.questionBankId
+      )
+      .then(result => {
+        this.fullscreenLoading = false;
+        console.log(result);
+      })
+      .catch(err => {
+        this.fullscreenLoading = false;
+        console.log(err);
+      });
   }
 };
 </script>

@@ -15,6 +15,9 @@
         <h2>Tags</h2>
         <p>{{questionTags}}</p>
 
+        <h2>题目类型</h2>
+        <p>{{questionType}}</p>
+
         <h2>题目答案</h2>
         <p>{{questionAnswer}}</p>
       </el-col>

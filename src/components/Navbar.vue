@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 import qs from "qs";
 export default {
   name: "navbar",
@@ -197,6 +197,7 @@ export default {
     },
     login() {
       var data = qs.stringify(this.loginForm);
+      this.fullscreenLoading = true;
       this.axios
         .post(this.GLOBAL.BASE_REQUEST_URL + "/login", data)
         .then(response => {
@@ -218,6 +219,7 @@ export default {
             this.user.userType = this.GLOBAL.UESR_TYPE;
             this.loginDialogVisible = false;
           }
+          this.fullscreenLoading = false;
         })
         .catch(() => {
           // console.log(error);
@@ -226,12 +228,14 @@ export default {
             message: "网络错误",
             type: "error"
           });
+          this.fullscreenLoading = false;
         });
       this.loginForm.email = "";
       this.loginForm.password = "";
     },
     register() {
       var data = qs.stringify(this.registerForm);
+      this.fullscreenLoading = true;
       this.axios
         .post(this.GLOBAL.BASE_REQUEST_URL + "/register", data)
         .then(response => {
@@ -250,6 +254,7 @@ export default {
             this.registerForm.password = "";
             this.registerForm.re_password = "";
           }
+          this.fullscreenLoading = false;
         })
         .catch(() => {
           // console.log(error);
@@ -259,33 +264,33 @@ export default {
             type: "error"
           });
         });
+      this.fullscreenLoading = false;
     },
-    Personal(){
-      var id = this.GLOBAL.USER_UUID
-      console.log(id)
-      this.$router.push({path: 'userinfo/' })
+    Personal() {
+      var id = this.GLOBAL.USER_UUID;
+      console.log(id);
+      this.$router.push({ path: "userinfo/" });
     },
-    logout(){
+    logout() {
       //this.axios.get(this.GLOBAL.BASE_REQUEST_URL+"/logout")
-      this.axios.get(this.GLOBAL.BASE_REQUEST_URL+"/logout").then(response=>{
-        console.log(response);
-      })
+      this.axios
+        .get(this.GLOBAL.BASE_REQUEST_URL + "/logout")
+        .then(response => {
+          console.log(response);
+        });
       this.GLOBAL.USER_NAME = "";
       this.GLOBAL.USER_UUID = "";
       this.GLOBAL.USER_EMAIL = "";
       this.GLOBAL.UESR_TYPE = "";
-       this.user.username = "";
+      this.user.username = "";
       this.user.userUuid = "";
       this.user.userEmail = "";
-      this.user.userType="";
-      console.log('sf')
-      this.$router.push({path: '/index'})
-     
-    
+      this.user.userType = "";
+      console.log("sf");
+      this.$router.push({ path: "/index" });
     }
   },
-  
- 
+
   components: {},
   created() {
     this.fullscreenLoading = true;
