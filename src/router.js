@@ -15,15 +15,15 @@ import Admin from './components/Admin/Admin.vue';
 import PersonalBank from './components/QuestionBank/PersonalBank.vue';
 import SearchBank from './components/QuestionBank/SearchBank.vue';
 import NewQuestionBank from './components/QuestionBank/NewQuestionBank.vue';
-// import QuestionBankDetail from './components/QuestionBank/QuestionDetail.vue';
+import QuestionBankDetail from './components/QuestionBank/QuestionBankDetail.vue';
 
 
 const routes = [
   { path: '/index', component: Home, meta: { title: 'XES Examination System' } },
   { path: '/question/:questionid', component: QuestionDetail, meta: { title: '题目详情' } },
-  { path: '/question', component: Question, meta: { title: '题目' } , },
+  { path: '/question', component: Question, meta: { title: '题目' }, },
   { path: '/group', component: Group, meta: { title: '小组' } },
-  // { path: '/questionbank/detail/:questionBankId', component: QuestionBankDetail , meta:{title:'题库详情'}},
+  { path: '/questionbank/detail/:questionBankId', component: QuestionBankDetail, meta: { title: '题库详情' } },
   {
     path: '/questionbank',
     component: QuestionBank,

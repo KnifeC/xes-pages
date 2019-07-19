@@ -278,8 +278,8 @@ export default {
             // console.log("USER_NAME:", response.data.user.username);
             this.GLOBAL.USER_NAME = response.data.user.username;
             this.GLOBAL.USER_UUID = response.data.user.userUuid;
-            console.log(this.GLOBAL.USER_UUID);
-            console.log(response.data.user.userUuid);
+            // console.log(this.GLOBAL.USER_UUID);
+            // console.log(response.data.user.userUuid);
             this.GLOBAL.USER_EMAIL = response.data.user.email;
             this.GLOBAL.UESR_TYPE = response.data.user.type;
             this.user.username = this.GLOBAL.USER_NAME;
