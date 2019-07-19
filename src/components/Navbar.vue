@@ -273,11 +273,13 @@ export default {
     },
     logout() {
       //this.axios.get(this.GLOBAL.BASE_REQUEST_URL+"/logout")
-      this.axios
-        .get(this.GLOBAL.BASE_REQUEST_URL + "/logout")
-        .then(response => {
-          console.log(response);
+      this.axios.get(this.GLOBAL.BASE_REQUEST_URL+"/logout").then(response=>{
+        console.log(response);
+        this.$message({
+        message: '你已成功登出',
+        type: 'success'
         });
+      })
       this.GLOBAL.USER_NAME = "";
       this.GLOBAL.USER_UUID = "";
       this.GLOBAL.USER_EMAIL = "";
