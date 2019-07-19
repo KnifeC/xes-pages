@@ -38,7 +38,7 @@
         <el-col :md="{span:12,offset:6}">
           <div v-if="noList">你还没有个人题库，先去创建一个吧</div>
           <div v-else v-for="item in questionBankList" :key="item">
-            <question-bank-table-item itemdata="item" :questionId="questionId"></question-bank-table-item>
+            <question-bank-table-item :itemdata="item" :questionId="questionId"></question-bank-table-item>
           </div>
         </el-col>
       </el-row>

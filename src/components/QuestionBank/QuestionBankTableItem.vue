@@ -4,10 +4,10 @@
     <el-col style="margin-top: 15px;">-->
     <el-card shadow="hover" style="margin-top:25px">
       <el-row>
-        <el-col :md="10" >
+        <el-col :md="10">
           <span>{{itemdata.questionBankName}}</span>
         </el-col>
-        <el-col :md="6">
+        <el-col :md="5">
           <el-button type="primary" style="float: right; padding: 3px 0" @click="goAdd()">添加</el-button>
         </el-col>
       </el-row>
@@ -21,7 +21,7 @@
 
 
 <script>
-import qs from 'qs';
+import qs from "qs";
 export default {
   data() {
     return {
@@ -35,9 +35,28 @@ export default {
   methods: {
     goAdd() {
       var data = {
-        questionId: questionId,
-        questionBankId : itemdata.questionBankId
-      }
+        questionId: this.questionId,
+        questionBankId: this.itemdata.questionBankId
+      };
+      var formData = qs.stringify(data);
+      this.axios
+        .post(this.GLOBAL.BASE_REQUEST_URL + "/addQuestion/toBank", formData)
+        .then(result => {
+          console.log(result);
+          this.$message({
+            showClose: true,
+            message: result.data.message,
+            type: result.data.status
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          this.$message({
+            showClose: true,
+            message:'添加失败',
+            type: 'error'
+          });
+        });
     }
   },
   beforeCreate() {},
