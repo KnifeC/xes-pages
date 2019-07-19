@@ -6,8 +6,10 @@
       </el-header>
     </el-container>
     <router-view></router-view>
-    
-    <el-footer><v-footer></v-footer></el-footer>
+
+    <el-footer>
+      <v-footer class="footer"></v-footer>
+    </el-footer>
   </div>
 </template>
 
@@ -19,7 +21,7 @@ export default {
   name: "app",
   components: {
     "v-navbar": Navbar,
-    "v-footer":Footer,
+    "v-footer": Footer
   }
 };
 </script>
@@ -30,5 +32,13 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */
+}
+.footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 75px;
+  /* background: #000; */
 }
 </style>

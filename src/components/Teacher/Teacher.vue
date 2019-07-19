@@ -4,7 +4,6 @@
       <h2>教师面板还没写</h2>
     </el-col>
   </el-row>
-  
 </template>
 
 <script>
