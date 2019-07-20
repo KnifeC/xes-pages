@@ -94,6 +94,8 @@ export default {
               message: result.data.status.message,
               type: result.data.status.status
             });
+            this.noList = true;
+            this.isLoading = false;
           }
         })
         .catch(err => {});
