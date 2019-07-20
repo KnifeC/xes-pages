@@ -14,9 +14,9 @@
             <el-input v-model="newExamForm.examinationName"></el-input>
           </el-form-item>
           <!-- <el-col :span="12"> -->
-          <el-form-item label="起始时间" prop="beginDate">
+          <el-form-item label="起始时间" prop="beginTime">
             <el-date-picker
-              v-model="newExamForm.beginDate"
+              v-model="newExamForm.beginTime"
               type="datetime"
               placeholder="选择日期时间"
               style="width:100%"
@@ -24,9 +24,9 @@
           </el-form-item>
           <!-- </el-col> -->
           <!-- <el-col :span="12"> -->
-          <el-form-item label="结束时间" prop="endDate">
+          <el-form-item label="结束时间" prop="endTime">
             <el-date-picker
-              v-model="newExamForm.endDate"
+              v-model="newExamForm.endTime"
               type="datetime"
               placeholder="选择日期时间"
               style="width:100%"
@@ -51,8 +51,8 @@ export default {
       fullscreenLoading: false,
       newExamForm: {
         examinationName: "",
-        beginDate: "",
-        endDate: ""
+        beginTime: "",
+        endTime: ""
       },
       newExamRules: {
         examinationName: [
