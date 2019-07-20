@@ -16,6 +16,7 @@ import ReviewExam from './components/Teacher/ReviewExam.vue';
 import Admin from './components/Admin/Admin.vue';
 import ExamDetail from './components/Exam/ExamDetail.vue';
 import TeacherExamdetail from './components/Exam/TeacherExamdetail'
+import Addstudent from './components/Exam/Addstudent'
 import UserInfo from './components/UserInfo.vue'
 import PersonalBank from './components/QuestionBank/PersonalBank.vue';
 import SearchBank from './components/QuestionBank/SearchBank.vue';
@@ -45,6 +46,7 @@ const routes = [
   { path: '/admin', component: Admin, meta: { title: '管理员面板' } },
   { path: '/examdetail/:id', component: ExamDetail },
   { path: '/teacherexamdetail', component: TeacherExamdetail },
+  { path: '/addstudent', component: Addstudent },
   { path: '/userinfo', component: UserInfo },
 
 
