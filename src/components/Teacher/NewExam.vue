@@ -32,6 +32,9 @@
               style="width:100%"
             ></el-date-picker>
           </el-form-item>
+          <el-form-item label="持续小时" prop="durationTime">
+            <el-input-number v-model="newExamForm.durationTime"  controls-position="right" :precision="2" :step="0.1" :min="0.5" :max="24" label="持续时长"></el-input-number>
+          </el-form-item>
           <!-- </el-col> -->
           <el-form-item style="text-align:center">
             <el-button type="primary" @click="createExamination()">新建考试</el-button>
@@ -52,7 +55,8 @@ export default {
       newExamForm: {
         examinationName: "",
         beginTime: "",
-        endTime: ""
+        endTime: "",
+        durationTime: ""
       },
       newExamRules: {
         examinationName: [
@@ -63,7 +67,7 @@ export default {
         ],
         endDate: [
           { required: true, message: "请选择结束时间", trigger: "blur" }
-        ]
+        ],
       }
     };
   },
