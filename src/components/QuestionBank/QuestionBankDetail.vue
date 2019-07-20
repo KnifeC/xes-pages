@@ -22,7 +22,19 @@
                 <el-input v-model="questionBankForm.questionBankName" :readonly="noEdit"></el-input>
               </el-form-item>
               <el-form-item label="可见性" prop="visibility">
-                <el-input v-model="questionBankForm.visibility" :readonly="noEdit"></el-input>
+                <el-select
+                  v-model="questionBankForm.visibility"
+                  placeholder="请选择可见性"
+                  style="width:100%"
+                  :disabled="noEdit"
+                >
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
               </el-form-item>
               <el-form-item label="创建者" prop="ownerName">
                 <el-input v-model="questionBankForm.ownerName" readonly="true"></el-input>
@@ -66,7 +78,17 @@ export default {
         ownerName: ""
       },
       questionDataList: "",
-      noQuestion: false
+      noQuestion: false,
+      options: [
+        {
+          value: "不公开",
+          label: "仅自己可见"
+        },
+        {
+          value: "公开",
+          label: "所有人可见"
+        }
+      ]
     };
   },
   components: {
@@ -131,6 +153,35 @@ export default {
     },
     changeQuestionBank() {
       this.noEdit = true;
+      var data = qs.stringify(this.questionBankForm);
+      this.axios
+        .post(this.GLOBAL.BASE_REQUEST_URL + "/editBankInfo", data)
+        .then(result => {
+          console.log(result);
+          if (result.data.status === "success") {
+            this.$message({
+              showClose: true,
+              message: result.data.message,
+              type: result.data.status
+            });
+            this.questionBankData = this.questionBankForm;
+          } else {
+            this.$message({
+              showClose: true,
+              message: result.data.message,
+              type: result.data.status
+            });
+            this.questionBankForm = this.questionBankData;
+          }
+        })
+        .catch(err => {
+          this.$message({
+            showClose: true,
+            message: "网络错误",
+            type: "error"
+          });
+          this.questionBankForm = this.questionBankData;
+        });
     }
   },
   created() {
