@@ -9,17 +9,24 @@
           style="margin-top: 25px;margin-bottom: 25px"
         ></el-page-header>
         <el-divider></el-divider>
-        <h2>考试编号</h2>
-        <h4>{{ExaminationId}}</h4>
-
-        <h2>考试科目</h2>
-        <h4>{{ExaminationName}}</h4>
-
-        <h2>创建者编号</h2>
-        <h4>{{creatorId}}</h4>
-
-        <h2>考试创建者</h2>
-        <h4>{{ExaminationCreator}}</h4>
+        <el-form ref="form" :model="form" label-width="200px">
+        <el-form-item label="考试编号">
+          <el-input placeholder="" v-model="ExaminationId" :disabled="true"> </el-input>
+        </el-form-item>
+        <el-form-item label="考试科目">
+          <el-input placeholder="" v-model="ExaminationName" :disabled="true"> </el-input>
+        </el-form-item>
+        <el-form-item label="创建者编号">
+          <el-input placeholder="" v-model="creatorId" :disabled="true"> </el-input>
+        </el-form-item>
+        <el-form-item label="考试创建者">
+          <el-input placeholder="" v-model="ExaminationCreator" :disabled="true"> </el-input>
+        </el-form-item>
+        </el-form>
+        <!-- <h4>考试编号:{{ExaminationId}}</h4> -->
+        <!-- <h4>考试科目:{{ExaminationName}}</h4>
+        <h4>创建者编号:{{creatorId}}</h4>
+        <h4>考试创建者:{{ExaminationCreator}}</h4> -->
       </el-col>
     </el-row>
   </div>

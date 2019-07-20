@@ -13,6 +13,7 @@ import Exam from './components/Exam/Exam.vue';
 import Teacher from './components/Teacher/Teacher.vue';
 import Admin from './components/Admin/Admin.vue';
 import ExamDetail from './components/Exam/ExamDetail.vue';
+import TeacherExamdetail from './components/Exam/TeacherExamdetail'
 import UserInfo from './components/UserInfo.vue'
 import PersonalBank from './components/QuestionBank/PersonalBank.vue';
 import SearchBank from './components/QuestionBank/SearchBank.vue';
@@ -39,6 +40,7 @@ const routes = [
   { path: '/teacher', component: Teacher, meta: { title: '教师面板' } },
   { path: '/admin', component: Admin, meta: { title: '管理员面板' } },
   { path: '/examdetail/:id', component: ExamDetail },
+  { path: '/teacherexamdetail', component: TeacherExamdetail },
   { path: '/userinfo', component: UserInfo },
   { path: '/', redirect: '/index' },
   { path: '*', component: ErrorComponent },
