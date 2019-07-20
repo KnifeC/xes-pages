@@ -29,8 +29,9 @@
         >
           <el-table-column prop="examinationName" label="考试名称" align="center"></el-table-column>
           <el-table-column align="center" prop="creatorName" label="考试创建者"></el-table-column>
+          <el-table-column align="center" prop="examStatus" label="考试状态"></el-table-column>
         </el-table>
-        <p v-if="noResult" style="margin: 0 auto;">抱歉没有查到你想要的结果</p>
+        <p v-if="noResult" align="center">抱歉没有查到你想要的结果</p>
       </el-col>
     </el-row>
   </div>
@@ -43,15 +44,18 @@ export default {
   data() {
     return {
       keyWords: {
+        creatorId:"",
         examinationId: "",
-        examinationName: ""
+        examinationName: "",
+        creatorName:""
       },
       examDataList: [],
       noResult: false
     };
   },
   created: function() {
-    Axios.get(
+    if(this.GLOBAL.UESR_TYPE==="user"){
+      Axios.get(
       this.GLOBAL.BASE_REQUEST_URL +
         "/searchExamination/byUserId/" +
         this.GLOBAL.USER_UUID
@@ -74,6 +78,31 @@ export default {
           type: "error"
         });
       });
+    }else if(this.GLOBAL.UESR_TYPE==="teacher"){
+       Axios.get(
+      this.GLOBAL.BASE_REQUEST_URL +
+        "/examinationByCreator/" +  this.GLOBAL.USER_UUID
+    )
+      .then(response => {
+        console.log(response.data);
+        if (response.data.status.status === "success") {
+          this.examDataList = response.data.examinationData;
+          this.noResult = false;
+        } else {
+          this.noResult = true;
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        this.noResult = true;
+        this.$message({
+          showClose: true,
+          message: "网络错误",
+          type: "error"
+        });
+      });
+    }
+    
   },
   methods: {
     search() {
@@ -113,8 +142,14 @@ export default {
     },
     openDetails(r, c, e) {
       var id = r.examinationId;
+      //var createid = r.examinationId;
       console.log(id);
-      this.$router.push({ path: "examdetail/" + id });
+      if(this.GLOBAL.UESR_TYPE==="user"){
+        this.$router.push({ path: "examdetail/" + id });
+      }else if(this.GLOBAL.UESR_TYPE==="teacher"){
+        this.$router.push({ path: "teacherexamdetail/"  });
+      }
+      
     }
   }
 };
