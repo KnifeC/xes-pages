@@ -7,14 +7,16 @@
         <el-row>{{itemdata.questionContent}}</el-row>
       </el-row>
       <el-divider></el-divider>
-      <el-col :md="18">
-        <span>贡献者:{{itemdata.uploaderName}}</span>
-      </el-col>
-      <el-col :md="6">
-        <el-button style="float: right; padding: 3px 0" type="text" @click="goDetail()">查看详情</el-button>
-      </el-col>
+      <el-row>
+        <el-col :md="18">
+          <span>贡献者:{{itemdata.uploaderName}}</span>
+        </el-col>
+        <el-col :md="6">
+          <el-button style="float: right; padding: 3px 0" type="text" @click="goDetail()">查看详情</el-button>
+        </el-col>
+      </el-row>
     </el-card>
-    
+
     <!-- </el-col>
     </el-row>-->
   </div>
@@ -25,9 +27,6 @@
 export default {
   data() {
     return {
-      path: "",
-      keyWords: "",
-      questionDataList: ""
     };
   },
   props: {
@@ -39,7 +38,9 @@ export default {
     }
   },
   beforeCreate() {},
-  mounted() {}
+  mounted() {
+    console.log(this.itemdata);
+  }
 };
 </script>
 

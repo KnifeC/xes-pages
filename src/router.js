@@ -10,7 +10,8 @@ import Question from './components/Question/Question.vue';
 import Group from './components/Group/Group.vue'
 import QuestionBank from './components/QuestionBank/QuestionBank.vue';
 import Exam from './components/Exam/Exam.vue';
-import Teacher from './components/Teacher/Teacher.vue';
+import NewExam from './components/Teacher/NewExam.vue';
+import ReviewExam from './components/Teacher/ReviewExam.vue';
 import Admin from './components/Admin/Admin.vue';
 import ExamDetail from './components/Exam/ExamDetail.vue';
 import TeacherExamdetail from './components/Exam/TeacherExamdetail'
@@ -37,11 +38,15 @@ const routes = [
     ]
   },
   { path: '/exam', component: Exam, meta: { title: '考试' } },
-  { path: '/teacher', component: Teacher, meta: { title: '教师面板' } },
+  { path: '/newexam', component: NewExam, meta: { title: '发起考试' } },
+  { path: '/reviewexam', component: ReviewExam, meta: { title: '批阅考试' } },
   { path: '/admin', component: Admin, meta: { title: '管理员面板' } },
   { path: '/examdetail/:id', component: ExamDetail },
   { path: '/teacherexamdetail', component: TeacherExamdetail },
   { path: '/userinfo', component: UserInfo },
+
+
+
   { path: '/', redirect: '/index' },
   { path: '*', component: ErrorComponent },
 

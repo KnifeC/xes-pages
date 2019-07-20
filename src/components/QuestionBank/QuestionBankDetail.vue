@@ -37,7 +37,7 @@
         <div>
           <p v-if="noQuestion">该题库没有题目</p>
           <div v-else v-for="item in questionDataList" :key="item">
-            <question-list-item itemdata="item"></question-list-item>
+            <question-list-item :itemdata="item"></question-list-item>
           </div>
         </div>
       </el-col>
