@@ -22,14 +22,14 @@
                 <el-input v-model="userForm.userName" :readonly="noEdit"></el-input>
               </el-form-item>
               <el-form-item label="邮箱" prop="visibility">
-                <el-input v-model="userForm.userEmail" :readonly="noEdit"></el-input>
+                <el-input v-model="userForm.userEmail" :readonly="true"></el-input>
               </el-form-item>
               <!-- <el-form-item label="权限" prop="ownerName">
                 <el-input v-model="questionBankForm.ownerName" readonly="true"></el-input>
-              </el-form-item> -->
+              </el-form-item>-->
               <el-form-item style="text-align:center">
                 <el-button type="primary" @click="noEdit=fasle">编辑</el-button>
-                <el-button type="primary" v-if="!noEdit" @click="changeQuestionBank()">提交</el-button>
+                <el-button type="primary" v-if="!noEdit" @click="editUserInfo()">提交</el-button>
               </el-form-item>
             </el-form>
           </el-col>
@@ -40,47 +40,35 @@
 </template>
 
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 export default {
   data() {
     return {
       noEdit: true,
       fullscreenLoading: false,
       fullscreenLoading: false,
-      userForm:{
-        userName:"",
-        userEmail:"",
-        userId:"",
+      userForm: {
+        userName: "",
+        userEmail: "",
+        userId: ""
       }
     };
   },
-  created(){
+  created() {
     this.userForm.userName = this.GLOBAL.USER_NAME;
-    this.userForm.userEmail=this.GLOBAL.USER_EMAIL;
+    this.userForm.userEmail = this.GLOBAL.USER_EMAIL;
   },
-  // created: function() {
-  //     Axios.get(this.GLOBAL.USER_UUID).then((response)=> {
-  //         console.log(response)
-  //           this.UserName=this.GLOBAL.USER_NAME;
-  //           this.Email=response.GLOBAL.USER_Email;
-  //           this.noResult = false;
-  //           console.log(this)
-  //       }).catch((error)=>{
-  //           console.log(error)
-  //           this.noResult = true;
-  //           this.$message({
-  //           showClose: true,
-  //           message: "网络错误",
-  //           type: "error"
-  //         });
-  //       })
-  // },
+ 
+
   methods: {
     goBack() {
       this.$router.go(-1);
-        }
+    },
+    editUserInfo(){
+      this.noEdit = false;
     }
-}
+  }
+};
 </script>
 
 <style scoped>
