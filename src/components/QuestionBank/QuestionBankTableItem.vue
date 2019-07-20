@@ -4,11 +4,11 @@
     <el-col style="margin-top: 15px;">-->
     <el-card shadow="hover" style="margin-top:25px">
       <el-row>
-        <el-col :md="10">
+        <el-col :md="16">
           <span>{{itemdata.questionBankName}}</span>
         </el-col>
-        <el-col :md="5">
-          <el-button type="primary" style="float: right; padding: 3px 0" @click="goAdd()">添加</el-button>
+        <el-col :md="8">
+          <el-button type="primary" style="float: right; padding: 3px 0" @click="goAdd()">添加到该题库</el-button>
         </el-col>
       </el-row>
       <!-- <el-divider></el-divider>

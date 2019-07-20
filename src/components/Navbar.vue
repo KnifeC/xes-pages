@@ -269,7 +269,7 @@ export default {
     Personal() {
       var id = this.GLOBAL.USER_UUID;
       console.log(id);
-      this.$router.push({ path: "userinfo/" });
+      this.$router.push({ path: "/userinfo" });
     },
     logout() {
       //this.axios.get(this.GLOBAL.BASE_REQUEST_URL+"/logout")

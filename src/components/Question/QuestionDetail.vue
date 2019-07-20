@@ -25,7 +25,7 @@
                 <el-input v-model="questionAnswer" type="textarea" readonly="noEdit"></el-input>
               </el-form-item>
               <el-form-item style="text-align:center">
-                <el-button type="primary" v-if="isLogin" @click="addToPersonalBank">添加到个人题库</el-button>
+                <el-button type="primary" @click="addToPersonalBank">添加到个人题库</el-button>
               </el-form-item>
             </el-form>
           </el-col>
@@ -100,9 +100,6 @@ export default {
     }
   },
   created() {
-    if (this.GLOBAL.USER_UUID !== "") {
-      this.isLogin = true;
-    }
     this.fullscreenLoading = true;
     this.questionId = this.$route.params.questionid;
     this.axios
