@@ -7,6 +7,7 @@ import Home from './components/Home.vue';
 import QuestionDetail from './components/Question/QuestionDetail';
 import ErrorComponent from './components/ErrorComponent.vue';
 import Question from './components/Question/Question.vue';
+import AddQuestion from './components/Question/AddQuestion.vue';
 import Group from './components/Group/Group.vue'
 import QuestionBank from './components/QuestionBank/QuestionBank.vue';
 import Exam from './components/Exam/Exam.vue';
@@ -26,6 +27,7 @@ const routes = [
   { path: '/index', component: Home, meta: { title: 'XES Examination System' } },
   { path: '/question/:questionid', component: QuestionDetail, meta: { title: '题目详情' } },
   { path: '/question', component: Question, meta: { title: '题目' }, },
+  { path: '/addquestion', component: AddQuestion, meta: { title: '增加题目' }, },
   { path: '/group', component: Group, meta: { title: '小组' } },
   { path: '/questionbank/detail/:questionBankId', component: QuestionBankDetail , meta:{title:'题库详情'}},
   {

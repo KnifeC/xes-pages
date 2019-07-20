@@ -78,6 +78,7 @@ export default {
                   message: result.data.status.message,
                   type: result.data.status.status
                 });
+                this.newQuestionBankForm.questionBankName = "";
               } else {
                 this.$alert(result.data.message,result.data.status,{
                     confirmButtonText: '确定',

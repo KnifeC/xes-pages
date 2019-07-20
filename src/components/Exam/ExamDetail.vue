@@ -27,13 +27,16 @@
         <!-- <h4>考试科目:{{ExaminationName}}</h4>
         <h4>创建者编号:{{creatorId}}</h4>
         <h4>考试创建者:{{ExaminationCreator}}</h4> -->
+
+        <exam-paper :examId="ExaminationId"></exam-paper>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import Axios from 'axios'
+import Axios from 'axios';
+import ExamPaper from './ExamPaper.vue';
 export default {
   data() {
     return {
@@ -43,6 +46,9 @@ export default {
       creatorId: "",
       ExaminationCreator: ""
     };
+  },
+  components:{
+    'exam-paper':ExamPaper,
   },
   created: function() {
       
