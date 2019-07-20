@@ -13,16 +13,19 @@
           <el-col :md="{span:18,offset:3}" style="margin-top: 15px;">
             <el-form ref="ruleForm" label-width="100px" class="demo-ruleForm">
               <el-form-item label="题目内容" prop="questionContent">
-                <el-input v-model="questionContent" type="textarea" :readonly="noEdit"></el-input>
+                <el-input v-model="questionContent" type="textarea" readonly=true></el-input>
               </el-form-item>
-              <el-form-item label="题目类型" prop="visibility">
-                <el-input v-model="questionType" :readonly="noEdit"></el-input>
+              <el-form-item label="题目类型" >
+                <el-input v-model="questionType" readonly=true></el-input>
               </el-form-item>
-              <el-form-item label="题目Tag" prop="visibility">
+              <el-form-item label="题目Tag" >
                 <el-tag v-for="tag in questionTags" :key="tag">{{tag}}</el-tag>
               </el-form-item>
-              <el-form-item label="题目答案" prop="ownerName">
-                <el-input v-model="questionAnswer" type="textarea" readonly="noEdit"></el-input>
+              <el-form-item label="题目贡献者" >
+                <el-input v-model="uploaderName" type="test" readonly=true></el-input>
+              </el-form-item>
+              <el-form-item label="题目答案" >
+                <el-input v-model="questionAnswer" type="textarea" readonly=true></el-input>
               </el-form-item>
               <el-form-item style="text-align:center">
                 <el-button type="primary" @click="addToPersonalBank">添加到个人题库</el-button>
@@ -61,6 +64,7 @@ export default {
       questionContent: "",
       questionAnswer: "",
       questionType: "",
+      uploaderName:"",
       questionBankList: []
     };
   },
@@ -115,6 +119,7 @@ export default {
           this.questionAnswer = result.data.questionDataList[0].questionAnswer;
           this.questionType = result.data.questionDataList[0].questionType;
           this.questionTags = result.data.questionDataList[0].questionTags;
+          this.uploaderName = result.data.questionDataList[0].uploaderName;
         } else {
           this.$router.push("/err");
         }
