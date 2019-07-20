@@ -42,6 +42,7 @@
               <el-form-item style="text-align:center">
                 <el-button type="primary" @click="noEdit=fasle">编辑</el-button>
                 <el-button type="primary" v-if="!noEdit" @click="changeQuestionBank()">提交</el-button>
+                <el-button type="warning" v-if="!noEdit" @click="deleteQuestionBank()">删除</el-button>
               </el-form-item>
             </el-form>
           </el-col>
@@ -181,6 +182,15 @@ export default {
             type: "error"
           });
           this.questionBankForm = this.questionBankData;
+        });
+    },
+    deleteQuestionBank(){
+        var data = qs.stringify({questionBankId:this.questionBankData.questionBankId});
+        this.axios.post(this.GLOBAL.BASE_REQUEST_URL+'/deleteQuestionBank',data).then((result) => {
+          console.log(result);
+          this.$router.replace('/questionbank/'+this.GLOBAL.USER_UUID);
+        }).catch((err) => {
+           console.log(err);
         });
     }
   },

@@ -110,7 +110,7 @@ export default {
   created: function() {
      
       Axios.get(this.GLOBAL.BASE_REQUEST_URL+ "/examinationByCreator/" +  this.GLOBAL.USER_UUID).then((response)=> {
-          console.log(response)
+          // console.log(response)
           if(response.data.status.status==="success"){
             this.ExaminationId=response.data.examinationData[0].examinationId;
             this.examform.examinationId=response.data.examinationData[0].examinationId;
@@ -119,12 +119,12 @@ export default {
             this.creatorId=response.data.examinationData[0].creatorId;
             this.ExaminationCreator=response.data.examinationData[0].creatorName;
             this.noResult = false;
-            console.log(this)
+            // console.log(this)
           }else{
             this.noResult = true;
           }
-        }).catch((error)=>{
-            console.log(error)
+        }).catch(()=>{
+            // console.log(error)
             this.noResult = true;
             this.$message({
             showClose: true,
@@ -140,14 +140,14 @@ export default {
     editexam(){
          var data = qs.stringify(this.examform);
 
-          Axios.post(this.GLOBAL.BASE_REQUEST_URL+ "/editExaminationInfo",data).then((response)=> {
-          console.log(response)
+          Axios.post(this.GLOBAL.BASE_REQUEST_URL+ "/editExaminationInfo",data).then(()=> {
+          // console.log(response)
           this.$message({
           message: '修改成功',
           type: 'success'
         });
-        }).catch((error)=>{
-            console.log(error)
+        }).catch(()=>{
+            // console.log(error)
             this.$message({
             showClose: true,
             message: "网络错误",

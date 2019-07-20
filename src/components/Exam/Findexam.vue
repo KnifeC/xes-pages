@@ -65,11 +65,11 @@ export default {
         this.GLOBAL.USER_UUID
     )
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.status.status === "success") {
           this.examDataList = response.data.examinationData;
           this.res = response.data.examinationData
-          console.log(this.res)
+          // console.log(this.res)
           this.noResult = false;
         } else {
           this.noResult = true;
@@ -90,7 +90,7 @@ export default {
         "/examinationByCreator/" +  this.GLOBAL.USER_UUID
     )
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.status.status === "success") {
           this.examDataList = response.data.examinationData;
           this.noResult = false;
@@ -113,7 +113,7 @@ export default {
   methods: {
     change() {
       var key = this.keyWords.examinationName
-       console.log(key)
+      //  console.log(key)
       this.res = this.examDataList.filter(i => {
         return i.examinationName.indexOf(key) >= 0
       })
@@ -127,7 +127,7 @@ export default {
         this.GLOBAL.USER_UUID
     )
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.status.status === "success") {
           this.examDataList = response.data.examinationData;
           this.res = response.data.examinationData
@@ -152,7 +152,7 @@ export default {
         "/examinationByCreator/" +  this.GLOBAL.USER_UUID
     )
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.status.status === "success") {
           this.examDataList = response.data.examinationData;
           this.noResult = false;
@@ -189,7 +189,7 @@ export default {
           this.keyWords.examinationName
       )
         .then(response => {
-          console.log(response);
+          // console.log(response);
           if (response.data.status.status === "success") {
             this.examDataList = response.data.examinationData;
             this.noResult = false;
@@ -197,8 +197,8 @@ export default {
             this.noResult = true;
           }
         })
-        .catch(error => {
-          console.log(error);
+        .catch(() => {
+          // console.log(error);
           this.noResult = true;
           this.$message({
             showClose: true,
@@ -211,7 +211,7 @@ export default {
     openDetails(r, c, e) {
       var id = r.examinationId;
       //var createid = r.examinationId;
-      console.log(id);
+      // console.log(id);
       if(this.GLOBAL.UESR_TYPE==="user"){
         this.$router.push({ path: "examdetail/" + id });
       }else if(this.GLOBAL.UESR_TYPE==="teacher"){

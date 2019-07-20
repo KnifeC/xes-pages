@@ -83,7 +83,7 @@ export default {
       this.axios
         .get(this.GLOBAL.BASE_REQUEST_URL + "/searchQuestionBank/byUserId")
         .then(result => {
-          console.log(result);
+          // console.log(result);
           if (result.data.status.status === "success") {
             if (result.data.questionBankData.length > 0) {
               this.questionBankList = result.data.questionBankData;
@@ -102,7 +102,7 @@ export default {
             this.isLoading = false;
           }
         })
-        .catch(err => {});
+        .catch(()=> {});
     }
   },
   created() {
@@ -125,7 +125,7 @@ export default {
         }
         this.fullscreenLoading = false;
       })
-      .catch(err => {
+      .catch(() => {
         this.fullscreenLoading = false;
         this.$router.push("/err");
       });

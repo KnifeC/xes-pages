@@ -16,7 +16,18 @@
                 <el-input v-model="questionForm.questionContent" type="textarea"></el-input>
               </el-form-item>
               <el-form-item label="题目类型">
-                <el-input v-model="questionForm.questionType"></el-input>
+                <el-select
+                  v-model="questionForm.questionType"
+                  placeholder="请选择题目类型"
+                  style="width:100%"
+                >
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
               </el-form-item>
               <!-- <el-form-item label="题目Tag">
                 <el-input v-model="questionTag"></el-input>
@@ -28,14 +39,13 @@
                 <el-button type="primary" @click="addQuestion">上传题目</el-button>
               </el-form-item>
             </el-form>
-            <el-form-item label="题目答案">
-              <el-input v-model="questionAnswer" v-if="success" type="textarea"></el-input>
+            <el-form-item v-if="success" label="点击跳转到你的题目地址">
+              <el-button @click="goQuestion()"></el-button>
             </el-form-item>
           </el-col>
         </el-row>
       </el-col>
     </el-row>
-
   </div>
 </template>
 
@@ -44,7 +54,7 @@ import qs from "qs";
 export default {
   data() {
     return {
-      success:false,
+      success: false,
       isLoading: false,
       isLogin: false,
       noList: false,
@@ -56,7 +66,25 @@ export default {
         questionType: ""
         // questionTag: "",
       },
-      questionBankList: []
+      questionBankList: [],
+      options: [
+        {
+          value: "选择题",
+          label: "选择题"
+        },
+        {
+          value: "填空题",
+          label: "填空题"
+        },
+        {
+          value: "判断题",
+          label: "判断题"
+        },
+        {
+          value: "简答题",
+          label: "简答题"
+        }
+      ]
     };
   },
   methods: {
@@ -72,28 +100,37 @@ export default {
       this.axios
         .post(this.GLOBAL.BASE_REQUEST_URL + "/uploadQuestion", data)
         .then(result => {
-          console.log(result);
-          // if (result.data.status.status === "success") {
-          //   if (result.data.questionBankData.length > 0) {
-          //     this.questionBankList = result.data.questionBankData;
-          //     this.isLoading = false;
-          //   } else {
-          //     this.noList = true;
-          //     this.isLoading = false;
-          //   }
-          // } else {
-          //   this.$message({
-          //     showClose: true,
-          //     message: result.data.status.message,
-          //     type: result.data.status.status
-          //   });
-          //   this.noList = true;
-          //   this.isLoading = false;
-          // }
+          // console.log(result);
+          if (result.data.status.status === "success") {
+            this.isLoading = false;
+            this.success = true;
+            this.questionId = result.data.questionDataList[0].questionId;
+            this.$message({
+              showClose: true,
+              message: result.data.status.message,
+              type: result.data.status.status
+            });
+          } else {
+            this.isLoading = false;
+            this.$message({
+              showClose: true,
+              message: result.data.status.message,
+              type: result.data.status.status
+            });
+          }
         })
-        .catch(err => {
-          console.log(err);
+        .catch(() => {
+          // console.log(err);
+          this.isLoading = false;
+            this.$message({
+              showClose: true,
+              message: '网络错误',
+              type: 'error'
+            });
         });
+    },
+    goQuestion(){
+      this.$router.push('/question/'+this.questionId);
     }
   }
 };
