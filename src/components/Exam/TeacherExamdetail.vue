@@ -14,11 +14,11 @@
           <el-input placeholder="" v-model="ExaminationId" :disabled="true"> </el-input>
         </el-form-item>
         <el-form-item label="考试科目">
-          <el-input placeholder="" v-model="ExaminationName" :disabled="flase"> </el-input>
+          <el-input placeholder="" v-model="examform.examinationName" :disabled="flase"> </el-input>
         </el-form-item>
-        <el-form-item label="创建者编号">
+        <!-- <el-form-item label="创建者编号">
           <el-input placeholder="" v-model="creatorId" :disabled="true"> </el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="考试创建者">
           <el-input placeholder="" v-model="ExaminationCreator" :disabled="true"> </el-input>
         </el-form-item>
@@ -30,7 +30,8 @@
                 type="datetime"
                 placeholder="选择日期时间"
                 align="right"
-                :picker-options="pickerOptions1">
+                :picker-options="pickerOptions1"
+                style="width:100%">
                 </el-date-picker>
             </div>
         </el-form-item>
@@ -42,10 +43,17 @@
                 type="datetime"
                 placeholder="选择日期时间"
                 align="right"
-                :picker-options="pickerOptions1">
+                :picker-options="pickerOptions1"
+                style="width:100%">
                 </el-date-picker>
             </div>
         </el-form-item>
+        <el-form-item label="持续小时" prop="durationTime">
+            <el-input-number v-model="examform.durationTime"  
+            controls-position="right" :precision="2" :step="0.1" :min="0.5" :max="24" 
+            label="持续时长"
+            style="width:100%"></el-input-number>
+          </el-form-item>
         <el-form-item style="text-align:center">
           <el-button type="primary" @click="editexam">提交</el-button>
         </el-form-item>
@@ -93,7 +101,8 @@ export default {
             examinationId:'',
             examinationName:'',
             beginTime:'',
-            endTime:''
+            endTime:'',
+            durationTime:''
         },
         
     };
@@ -105,7 +114,7 @@ export default {
           if(response.data.status.status==="success"){
             this.ExaminationId=response.data.examinationData[0].examinationId;
             this.examform.examinationId=response.data.examinationData[0].examinationId;
-            this.examform.examinationName=response.data.examinationData[0].examinationName;
+            //this.examform.examinationName=response.data.examinationData[0].examinationName;
             this.ExaminationName=response.data.examinationData[0].examinationName;
             this.creatorId=response.data.examinationData[0].creatorId;
             this.ExaminationCreator=response.data.examinationData[0].creatorName;

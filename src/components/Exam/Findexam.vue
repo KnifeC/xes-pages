@@ -15,9 +15,10 @@
             icon="el-icon-search"
           ></el-button>
         </el-input>
+        <el-button type="text"  @click="deletefind">清除搜索</el-button>
       </el-col>
     </el-row>
-
+       
     <el-row>
       <el-col :md="{span:14,offset:5}">
         <el-table
@@ -29,7 +30,7 @@
         >
           <el-table-column prop="examinationName" label="考试名称" align="center"></el-table-column>
           <el-table-column align="center" prop="creatorName" label="考试创建者"></el-table-column>
-          <el-table-column align="center" prop="examStatus" label="考试状态"></el-table-column>
+          <el-table-column align="center" prop="examinationStatus" label="考试状态"></el-table-column>
         </el-table>
         <p v-if="noResult" align="center">抱歉没有查到你想要的结果</p>
       </el-col>
@@ -47,6 +48,7 @@ export default {
         creatorId:"",
         examinationId: "",
         examinationName: "",
+        examinationStatus:'',
         creatorName:""
       },
       examDataList: [],
@@ -105,6 +107,9 @@ export default {
     
   },
   methods: {
+    deletefind(){
+      this.$router.push({ path: "/exam" });
+    },
     search() {
       if (this.keyWords.examinationName === "") {
         this.$message({
@@ -140,6 +145,7 @@ export default {
           });
         });
     },
+   
     openDetails(r, c, e) {
       var id = r.examinationId;
       //var createid = r.examinationId;
