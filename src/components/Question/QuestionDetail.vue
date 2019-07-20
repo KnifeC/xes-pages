@@ -18,9 +18,9 @@
               <el-form-item label="题目类型" >
                 <el-input v-model="questionType" readonly=true></el-input>
               </el-form-item>
-              <el-form-item label="题目Tag" >
+              <!-- <el-form-item label="题目Tag" >
                 <el-tag v-for="tag in questionTags" :key="tag">{{tag}}</el-tag>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item label="题目贡献者" >
                 <el-input v-model="uploaderName" type="test" readonly=true></el-input>
               </el-form-item>
