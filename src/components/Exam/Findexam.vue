@@ -7,6 +7,7 @@
           @keyup.enter.native="search()"
           placeholder="请输入关键字进行搜索"
           v-model="keyWords.examinationName"
+          v-on:input="change"
         >
           <el-button
             @click="search()"
@@ -52,7 +53,8 @@ export default {
         creatorName:""
       },
       examDataList: [],
-      noResult: false
+      noResult: false,
+      res: []
     };
   },
   created: function() {
@@ -66,6 +68,8 @@ export default {
         console.log(response.data);
         if (response.data.status.status === "success") {
           this.examDataList = response.data.examinationData;
+          this.res = response.data.examinationData
+          console.log(this.res)
           this.noResult = false;
         } else {
           this.noResult = true;
@@ -107,8 +111,66 @@ export default {
     
   },
   methods: {
+    change() {
+      var key = this.keyWords.examinationName
+       console.log(key)
+      this.res = this.examDataList.filter(i => {
+        return i.examinationName.indexOf(key) >= 0
+      })
+    },
     deletefind(){
-      this.$router.push({ path: "/exam" });
+      
+      if(this.GLOBAL.UESR_TYPE==="user"){
+      Axios.get(
+      this.GLOBAL.BASE_REQUEST_URL +
+        "/searchExamination/byUserId/" +
+        this.GLOBAL.USER_UUID
+    )
+      .then(response => {
+        console.log(response.data);
+        if (response.data.status.status === "success") {
+          this.examDataList = response.data.examinationData;
+          this.res = response.data.examinationData
+          console.log(this.res)
+          this.noResult = false;
+        } else {
+          this.noResult = true;
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        this.noResult = true;
+        this.$message({
+          showClose: true,
+          message: "网络错误",
+          type: "error"
+        });
+      });
+    }else if(this.GLOBAL.UESR_TYPE==="teacher"){
+       Axios.get(
+      this.GLOBAL.BASE_REQUEST_URL +
+        "/examinationByCreator/" +  this.GLOBAL.USER_UUID
+    )
+      .then(response => {
+        console.log(response.data);
+        if (response.data.status.status === "success") {
+          this.examDataList = response.data.examinationData;
+          this.noResult = false;
+        } else {
+          this.noResult = true;
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        this.noResult = true;
+        this.$message({
+          showClose: true,
+          message: "网络错误",
+          type: "error"
+        });
+      });
+    }
+    this.keyWords.examinationName=""
     },
     search() {
       if (this.keyWords.examinationName === "") {
