@@ -11,16 +11,16 @@
         <el-divider></el-divider>
         <el-form ref="form" :model="form" label-width="160px">
         <el-form-item label="考试编号">
-          <el-input placeholder="" v-model="ExaminationId" :disabled="true"> </el-input>
+          <el-input placeholder="" v-model="ExaminationId" :readonly="true"> </el-input>
         </el-form-item>
         <el-form-item label="考试科目">
-          <el-input placeholder="" v-model="examform.examinationName" :disabled="flase"> </el-input>
+          <el-input placeholder="" v-model="examform.examinationName" :readonly="true"> </el-input>
         </el-form-item>
         <!-- <el-form-item label="创建者编号">
-          <el-input placeholder="" v-model="creatorId" :disabled="true"> </el-input>
+          <el-input placeholder="" v-model="creatorId" :readonly="true"> </el-input>
         </el-form-item> -->
         <el-form-item label="考试创建者">
-          <el-input placeholder="" v-model="ExaminationCreator" :disabled="true"> </el-input>
+          <el-input placeholder="" v-model="ExaminationCreator" :readonly="true"> </el-input>
         </el-form-item>
         <el-form-item label="考试开始时间">
             <div class="block">
@@ -31,7 +31,8 @@
                 placeholder="选择日期时间"
                 align="right"
                 :picker-options="pickerOptions1"
-                style="width:100%">
+                style="width:100%"
+                readonly="true">
                 </el-date-picker>
             </div>
         </el-form-item>
@@ -44,7 +45,8 @@
                 placeholder="选择日期时间"
                 align="right"
                 :picker-options="pickerOptions1"
-                style="width:100%">
+                style="width:100%"
+                readonly="true">
                 </el-date-picker>
             </div>
         </el-form-item>
@@ -52,10 +54,11 @@
             <el-input-number v-model="examform.durationTime"  
             controls-position="right" :precision="2" :step="0.1" :min="0.5" :max="24" 
             label="持续时长"
-            style="width:100%"></el-input-number>
+            style="width:100%"
+            disabled="true"></el-input-number>
           </el-form-item>
         <el-form-item style="text-align:center">
-          <el-button type="primary" @click="editexam">提交</el-button>
+          <el-button type="primary" @click="editexam" disabled="true">编辑</el-button>
         </el-form-item>
         </el-form>
       </el-col>
@@ -114,7 +117,9 @@ export default {
           if(response.data.status.status==="success"){
             this.ExaminationId=response.data.examinationData[0].examinationId;
             this.examform.examinationId=response.data.examinationData[0].examinationId;
-            //this.examform.examinationName=response.data.examinationData[0].examinationName;
+            this.examform.examinationName=response.data.examinationData[0].examinationName;
+            this.examform.beginTime=response.data.examinationData[0].beginTime;
+            this.examform.endTime=response.data.examinationData[0].endTime;
             this.ExaminationName=response.data.examinationData[0].examinationName;
             this.creatorId=response.data.examinationData[0].creatorId;
             this.ExaminationCreator=response.data.examinationData[0].creatorName;
