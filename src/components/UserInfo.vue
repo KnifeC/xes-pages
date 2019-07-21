@@ -25,6 +25,9 @@
               <el-form-item label="邮箱" prop="visibility">
                 <el-input v-model="userForm.userEmail" :readonly="true"></el-input>
               </el-form-item>
+              <el-form-item label="账号类别" prop="visibility">
+                <el-input v-model="userType" :readonly="true"></el-input>
+              </el-form-item>
               <!-- <el-form-item label="权限" prop="ownerName">
                 <el-input v-model="questionBankForm.ownerName" readonly="true"></el-input>
               </el-form-item>-->
@@ -96,6 +99,7 @@ export default {
       fullscreenLoading: false,
       fullscreenLoading: false,
       showDialog: false,
+      userType:"",
       userForm: {
         userName: "",
         userId: ""
@@ -125,6 +129,7 @@ export default {
   created() {
     this.userForm.userName = this.GLOBAL.USER_NAME;
     this.userForm.userEmail = this.GLOBAL.USER_EMAIL;
+    this.userType = this.GLOBAL.USER_TYPE;
   },
 
   methods: {
