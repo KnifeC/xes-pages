@@ -20,21 +20,18 @@
               @keyup.enter.native="validateEditUser()"
             >
               <el-form-item label="姓名" prop="userName">
-                <el-input v-model="userForm.userName" :readonly="noEdit"></el-input>
+                <el-input v-model="userForm.userName" :readonly="true"></el-input>
               </el-form-item>
-              <el-form-item label="邮箱" prop="visibility">
-                <el-input v-model="userForm.userEmail" :readonly="true"></el-input>
+              <el-form-item label="邮箱" prop="userEmail">
+                <el-input v-model="userEmail" :readonly="true"></el-input>
               </el-form-item>
-              <el-form-item label="账号类别" prop="visibility">
+              <!-- <el-form-item label="账号类别">
                 <el-input v-model="userType" :readonly="true"></el-input>
-              </el-form-item>
-              <!-- <el-form-item label="权限" prop="ownerName">
-                <el-input v-model="questionBankForm.ownerName" readonly="true"></el-input>
-              </el-form-item>-->
+              </el-form-item> -->
               <el-form-item style="text-align:center">
-                <el-button type="primary" @click="noEdit=fasle">编辑</el-button>
-                <el-button type="primary" v-if="!noEdit" @click="validateEditUser()">提交</el-button>
-                <el-button type="danger" v-if="!noEdit" @click="showDialog=true">修改密码</el-button>
+                <!-- <el-button type="primary" @click="noEdit=fasle">编辑</el-button> -->
+                <!-- <el-button type="primary" v-if="!noEdit" @click="validateEditUser()">提交</el-button> -->
+                <el-button type="danger"  @click="showDialog=true">修改密码</el-button>
               </el-form-item>
             </el-form>
           </el-col>
@@ -88,18 +85,19 @@ import qs from "qs";
 export default {
   data() {
     var validateRepass = (rule, value, callback) => {
-      if (value !== this.registerForm.password) {
+      if (value !== this.editPassForm.password) {
         callback(new Error("两次输入密码不一致!"));
       } else {
         callback();
       }
     };
     return {
+      userEmail: "",
       noEdit: true,
       fullscreenLoading: false,
       fullscreenLoading: false,
       showDialog: false,
-      userType:"",
+      userType: "",
       userForm: {
         userName: "",
         userId: ""
@@ -109,10 +107,8 @@ export default {
         password: "",
         re_password: ""
       },
-      userRules:{
-        userName:[
-          { required: true, message: "请输入用户名", trigger: "blur" },
-        ]
+      userRules: {
+        userName: [{ required: true, message: "请输入用户名", trigger: "blur" }]
       },
       editPassRules: {
         password: [
@@ -127,8 +123,10 @@ export default {
     };
   },
   created() {
+    this.userForm.userId = this.GLOBAL.USER_UUID;
+    this.editPassForm.userId = this.GLOBAL.USER_UUID;
     this.userForm.userName = this.GLOBAL.USER_NAME;
-    this.userForm.userEmail = this.GLOBAL.USER_EMAIL;
+    this.userEmail = this.GLOBAL.USER_EMAIL;
     this.userType = this.GLOBAL.USER_TYPE;
   },
 
@@ -136,39 +134,44 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
-    validateEditUser(){
+    validateEditUser() {
       this.$refs["userForm"].validate(valid => {
         if (valid) {
           this.editUserInfo();
+        } else {
+          return false;
         }
-          else{
-            return false;
-          }
-    });},
-    validateEditPass(){
+      });
+    },
+    validateEditPass() {
       this.$refs["editPassForm"].validate(valid => {
         if (valid) {
-          this.editPasswod();
+          this.editPassword();
+        } else {
+          return false;
         }
-          else{
-            return false;
-          }
-    });},
+      });
+    },
     editUserInfo() {
       this.userForm.userId = this.GLOBAL.USER_UUID;
       var data = qs.stringify(this.userForm);
       this.noEdit = true;
       this.axios
-        .post(this.GLOBAL.BASE_REQUEST_URL + "/", data)
+        .post(this.GLOBAL.BASE_REQUEST_URL + "/editUsername", data)
         .then(result => {
           if (result.status.status === "success") {
             this.GLOBAL.USER_NAME = this.userForm.userName;
             this.$message({
-              showClose:true,
-              message:result.data.status.message,
-              type:result.data.status.status
+              showClose: true,
+              message: '修改成功，请刷新页面',
+              type: result.data.status
             });
           }
+          this.$message({
+            showClose: true,
+            message: result.data.status.message,
+            type: result.data.status.status
+          });
         })
         .catch(err => {});
     },
@@ -177,14 +180,14 @@ export default {
       var data = qs.stringify(this.editPassForm);
       this.noEdit = true;
       this.axios
-        .post(this.GLOBAL.BASE_REQUEST_URL + "/", data)
+        .post(this.GLOBAL.BASE_REQUEST_URL + "/editPassword", data)
         .then(result => {
-            this.$message({
-              showClose:true,
-              message:result.data.status.message,
-              type:result.data.status.status
-            });
-          })
+          this.$message({
+            showClose: true,
+            message: result.data.message,
+            type: result.data.status
+          });
+        })
         .catch(err => {
           this.$message({
             showClose: true,
