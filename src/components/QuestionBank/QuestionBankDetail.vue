@@ -42,7 +42,7 @@
               <el-form-item style="text-align:center">
                 <el-button type="primary" @click="noEdit=fasle">编辑</el-button>
                 <el-button type="primary" v-if="!noEdit" @click="changeQuestionBank()">提交</el-button>
-                <el-button type="warning" v-if="!noEdit" @click="deleteQuestionBank()">删除</el-button>
+                <el-button type="danger" v-if="!noEdit" @click="deleteQuestionBank()">删除</el-button>
               </el-form-item>
             </el-form>
           </el-col>
